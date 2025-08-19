@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="./comon/vant4.css"/>
+    <script src="./comon/vue3.js"></script>
+    <script src="./comon/vant.min.js"></script>
+    <script src="./comon/axios.min.js"></script>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>博彦科技</title>
+</head>
+<body>
+<div id="app">
+    <transition>
+        <van-loading type="spinner" v-show="showLoading" vertical :size="36" :text-color="'#ffffff'"
+                style="position: absolute;width: 100vw;height: 100vh;display: flex;z-index: 10;
+            justify-content: center;align-items: center;background: rgba(73, 73, 73, 0.8);transform: all 1s;">
+            <template #default> 加载中。。。</template>
+        </van-loading>
+    </transition>
+    <div>
+        <div style="display: flex; justify-content: center; padding: 30% 0 20% 0">
+            <van-image style="width: 60%" src="./comon/logo_03.png"></van-image>
+        </div>
+    </div>
+    <div class="login-form">
+        <van-form @submit="handleSubmit" @failed="onFailed" ref="formRef">
+            <van-cell-group inset>
+                <van-field v-model="selectedMethod" label="验证方式" name="selectType" placeholder="请选择验证方式" readonly @click="showSelect = true">
+                    <template #input>
+                        <label>
+                            <input type="text" readonly style="width: 100%" :disabled="passVerification" :value="validateList[selectedMethod].label"/>
+                        </label>
+                    </template>
+                </van-field>
+            </van-cell-group>
+            <van-cell-group inset style="margin-top: 20px">
+                <van-field v-if="selectedMethod === 'phone'" v-model="phone" label="手机号"
+                        type="tel" name="phoneNumber" required :disabled="passVerification"
+                        :rules="[{required: true,validator: validateMobile,message: '个人手机必填'}]"
+                        placeholder="请输入验证手机号" :value="phone" @input="phone = $event.target.value">
+                </van-field>
+            </van-cell-group>
+            <van-cell-group inset>
+                <van-field v-if="selectedMethod === 'email'" v-model="email" label="邮箱" placeholder="请输入邮箱"
+                        name="email" type="email" :disabled="passVerification"
+                        :rules="[{required: true,validator: validateEmail,message: '邮箱必填'}]"
+                        required :value="email" @input="email = $event.target.value">
+                </van-field>
+            </van-cell-group>
+            <van-dialog style="padding: 20px" :lazy-render="true" v-model:show="showVerify" title="人机验证"
+                    :show-cancel-button="false" :show-confirm-button="false">
+                <canvas :class="cvsClass" :height="verifyObj.height" :style="`width:${verifyObj.width};margin:auto`" ref="cvs"></canvas>
+            </van-dialog>
+            <van-cell-group inset style="margin-top: 20px">
+                <van-field v-model="verificationCode" center name="verificationCode" required
+                        :rules="[{required: true,message: '验证码必填'}]" label="验证码" placeholder="请输入验证码">
+                    <template #button>
+                        <van-button type="primary" @click="generateCaptcha" :disabled="passVerification">
+                            {{passVerification?'已发送 ' +computedCountDowm:'获取验证码'}}
+                        </van-button>
+                    </template>
+                </van-field>
+            </van-cell-group>
+
+            <div style="margin: 50px auto 0; width: 50%">
+                <van-button class="submit-button" type="primary" block native-type="submit">提交</van-button>
+            </div>
+            <van-popup v-model:show="showSelect" position="bottom" safe-area-inset-bottom>
+                <van-picker :columns="selectArr" @confirm="selectConfirm" @cancel="showSelect= false"></van-picker>
+            </van-popup>
+        </van-form>
+    </div>
+</div>
+<script>
+    const {createApp, reactive, toRefs, ref, setup, onMounted, watch, nextTick, computed,} = Vue;
+    const {showToast, showFailToast} = vant;
+    const app = Vue.createApp({
+        setup() {
+            const state = reactive({
+                selectedMethod: "phone",
+                validateList: {
+                    phone: {label: "手机号验证", pattern: /^1\d{10}$/},
+                    email: {
+                        label: "邮箱验证",
+                        pattern: /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
+                    },
+                },
+                phone: "",
+                email: "",
+                sliderValue: 0,
+                verificationCode: "",
+                passVerification: false, //是否通过人机验证
+                showLoading: false, //页面是否进入loading状态
+                goalCaptcha: "", //目标验证码
+            });
+
+            const countDownNumber = ref(60); //倒计时剩余时间
+            const showSelect = ref(false); //显示下拉框
+            const showVerify = ref(false); // 显示人机验证弹窗
+            const formRef = ref(); //form实例
+            const selectArr = [
+                {
+                    text: "手机号验证",
+                    value: "phone",
+                },
+                {
+                    text: "邮箱验证",
+                    value: "email",
+                },
+            ];
+            //跳转
+            const jumpHr = () => {
+                window.location.replace('https://e-cology.beyondsoft.com/beyondsoft/jsp/custome/hr.html')
+            }
+            const handleSubmit = async () => {
+                await formRef.value.validate();
+                // 提交表单的逻辑
+                console.log(state.verificationCode, state.goalCaptcha)
+                if (state.verificationCode !== state.goalCaptcha) {
+                    showToast({
+                        message: "验证码错误",
+                        position: "middle",
+                    });
+                    return;
+                }
+                const bank1 = new URLSearchParams();
+                bank1.append('verificationCode', state['verificationCode'])
+                bank1.append('code', JSON.parse(sessionStorage.getItem('verificationCode')))
+                bank1.append('timestamp', JSON.parse(sessionStorage.getItem('timestamp')))
+                state.showLoading = true
+                try {
+                    await window.axios({
+                        method: "post",
+                        url: "/beyondsoft/rest/loginService/VerificationCode",
+                        data: bank1,
+                        scriptCharset: "utf-8",
+                        headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                    });
+                    console.log("提交的数据:", state);
+                    showToast({
+                        message: '提交成功',
+                        type: 'success',
+                        position: 'middle'
+                    })
+                    //跳转到填报界面
+                    window.sessionStorage.setItem('selectedMethod', state.selectedMethod);
+                    window.sessionStorage.setItem('userInput', state.selectedMethod == 'phone' ? state.phone : state.email);
+                    jumpHr()
+                } catch (e) {
+                    console.warn(e)
+                    showToast({
+                        message: '提交失败',
+                        type: 'eorro',
+                        position: 'middle'
+                    })
+                } finally {
+                    state.showLoading = false
+                }
+            }
+            const formatSliderTooltip = (value) => {
+                return value === 100 ? "验证通过" : "请拖动滑块进行验证";
+            };
+            const selectConfirm = (e) => {
+                console.log(e);
+                state.selectedMethod = e.selectedValues[0];
+                state.phone = null;
+                state.email = null;
+                showSelect.value = false;
+            };
+            //手机号码进行校验
+            const validateMobile = (val) => {
+                let reg = /^1[3|4|5|6|7|8|9][0-9]\d{8}$/;
+                if (!reg.test(val)) {
+                    return `手机号码格式不正确'`;
+                }
+            };
+            //邮箱进行校验
+            const validateEmail = (val) => {
+                let reg =
+                    /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(.[a-zA-Z0-9_-]+)+/;
+                if (!reg.test(val)) {
+                    return `邮箱格式不正确'`;
+                }
+            };
+            let timer;
+            //倒计时计算属性
+            const computedCountDowm = computed(() => {
+                if (state.passVerification && countDownNumber.value <= 0) {
+                    clearTimeout(timer);
+                    state.passVerification = false;
+                    vfcx.reset();
+
+                    return;
+                } else {
+                    timer = setTimeout(() => {
+                        countDownNumber.value = +countDownNumber.value - 1;
+                    }, 1000);
+                    return countDownNumber.value < 10
+                        ? "0" + countDownNumber.value
+                        : countDownNumber.value;
+                }
+            });
+            const verifyObj = reactive({
+                servertest: false,
+                width: "100%",
+                height: 50,
+                strokeWidth: 10,
+                dropWidth: 50,
+                certTypes: [
+                    {text: "手机号", value: 0},
+                    {text: "邮箱", value: 1},
+                ],
+                show: true, //是否显示人机验证
+                // 滑块颜色
+                dropColor: "#fff",
+                // 待验证文本色
+                tipNoneColor: "#000",
+                // 验证成功文本色
+                tipSucColor: "#fff",
+                // 验证中的文本色
+                tipTestIngColor: "#fff",
+                // 验证失败文本色
+                tipTailColor: "#ee0a24",
+                // 验证中提示
+                testTip: "正在验证...",
+                // 滑块背景色颜色
+                slideColor: "#e8e8e8",
+                // 滑块背景色颜色
+                tipTxt: "向右滑动验证",
+                // 验证通过背景色
+                successBgColor: "#1989fa",
+                //  验证失败背景色
+                tailBgColor: "#ee0a24",
+                // 已激活的背景色
+                activeBgColor: "#1989fa",
+                // 验证中激活的背景色
+                testIngBgColor: "#ff976a",
+                // 验证成功文字提示
+                successTip: "验证通过！",
+                // 验证失败文字提示
+                failTip: "验证失败，请重试",
+                // 文本大小
+                fontSize: 16,
+            });
+            let vfcx = null;
+            const cvs = ref();
+            const cvsClass = ref("cur-none");
+            let vfcres = {
+                startX: 0, //开始拖动滑块位置
+                endX: 0, //结束拖动滑块位置
+                timed: 0, //拖动所用时间 || 低于30毫秒认定为机器
+                guiji: [], //拖动轨迹 | 连续2个2数之差相同判定为机器
+                width: verifyObj.width,
+            };
+            const vfcStatu = reactive({
+                statu: "none",
+            });
+            // 监听数据，并发给父级
+            watch(vfcStatu, (res) => {
+                if (res.statu && vfcx) {
+                    // 验证成功
+                    if (res.statu === "success") {
+                        vfcx.anmateOff = false;
+                        vfcx.activeBgColor = verifyObj.successBgColor;
+                        vfcx.tipTxt = verifyObj.successTip;
+                        // vfcx.colors.slideColor = verifyObj.successBgColor;
+                        vfcx.evNone();
+                        console.log("验证成功");
+                        state.showLoading = true; //开启页面的loading
+                        showVerify.value = false;
+                        setTimeout(async () => {
+                            try {
+                                const bank1 = new URLSearchParams();
+                                const url =
+                                    state.selectedMethod == "phone"
+                                        ? "/beyondsoft/rest/loginService/ConfirmPhoneCode"
+                                        : "/beyondsoft/rest/loginService/ConfirmEmailCode"; //判断验证类型
+                                const lable = state.selectedMethod == "phone" ? "sjh" : "yx"; //判断验证类型
+                                const value = state.selectedMethod == 'phone' ? state.phone : state.email
+                                bank1.append(lable, value);
+                                console.log('bank1', bank1)
+                                const result = await window.axios({
+                                    method: "post",
+                                    url: url,
+                                    data: bank1,
+                                    scriptCharset: "utf-8",
+                                    headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                                });
+                                if (typeof result.data == "string") {
+                                    showToast({
+                                        message: result.data,
+                                        positionL: 'middle'
+                                    })
+                                    state.passVerification = false;
+                                    return
+                                }
+                                if (result.data.validatecode == null && result.data.validatecode == undefined) {
+                                    showToast({
+                                        message: "请填写正确的号码!",
+                                        position: "middle",
+                                    });
+                                } else {
+                                    state.goalCaptcha = result.data.validatecode
+                                    showToast({
+                                        message: "验证码已发送!",
+                                        position: "middle",
+                                    });
+                                }
+                                sessionStorage.setItem(
+                                    "verificationCode",
+                                    JSON.stringify(result.data.validatecode)
+                                ); //将目标验证码存入sessionStorage
+                                sessionStorage.setItem(
+                                    "timestamp",
+                                    JSON.stringify(result.data.timestamp)
+                                ); //将目标验证码存入sessionStorage
+                                state.passVerification = true;
+                                countDownNumber.value = 60;
+                            } catch (e) {
+                                showToast({
+                                    message: '验证码获取失败',
+                                    type: 'error',
+                                    position: 'middle'
+                                })
+                            } finally {
+                                state.showLoading = false;
+                                vfcx.reset();
+                                vfcx.tipTxt = verifyObj.failTip;
+                                vfcx.fontColor = verifyObj.tipTailColor;
+                                vfcx.draw();
+                            }
+                            console.log("loading", state.showLoading);
+                        }, 1500);
+                    } else if (res.statu === "tail") {
+                        vfcx.reset();
+                        vfcx.tipTxt = verifyObj.failTip;
+                        vfcx.fontColor = verifyObj.tipTailColor;
+                        vfcx.draw();
+                        console.log("验证失败");
+                    }
+                }
+            });
+
+            //提交的时候做表单校验
+            const onFailed = (errorInfo) => {
+                console.log("errorInfo", errorInfo);
+                showFailToast({
+                    message: errorInfo.errors[0].message,
+                    position: "middle",
+                });
+            };
+
+            class Vfcs {
+                constructor(cvsEl, cvsClass, vfcres, vfcStatu, strokeWidth, dropWidth, fontSize, servertest, colors, tipTxt) {
+                    this.cvsEl = cvsEl;
+                    this.vfcres = vfcres;
+                    this.cvsClass = cvsClass;
+                    this.strokeWidth = strokeWidth;
+                    this.dropWidth = dropWidth;
+                    this.vfcStatu = vfcStatu;
+                    this.colors = colors;
+                    this.fontSize = fontSize;
+                    this.dwonIsPath = false; //是否按下验证滑块
+                    this.ctx = null;
+                    this.allTipTxts = tipTxt;
+                    this.tipTxt = this.allTipTxts.tipTxt;
+                    this.fontColor = this.colors.tipNoneColor;
+                    this.activeBgColor = this.colors.activeBgColor;
+                    this.servertest = servertest;
+                    this.guiji = [];
+                    this.startTime = 0;
+                    this.endTime = 0;
+                    this.startX = 0;
+                    this.startY = 0;
+                    this.moveX = 0;
+                    this.moveY = 0;
+                    this.fontOp = 1; //文本透明度
+                    this.met = false;
+                    this.offX = 0; //x轴的位移
+                    this.minX = this.strokeWidth / 2;
+                    this.maxX = this.cvsEl.width - this.dropWidth - this.strokeWidth;
+                    this.dropX = this.minX + this.offX; // 滑块位置
+                    this.toTouchEnd = false;
+                    //是否按下滑块
+                    this.isDown = false;
+                    this.testAm = null; //验证中动画的id
+                    this.anmateOff = true; //动画开关
+                    this.evsName = []; //事件名
+                    this.evsFun = [
+                        this.down.bind(this),
+                        this.move.bind(this),
+                        this.up.bind(this),
+                    ]; //事件方法
+                    this.init();
+                }
+
+                init() {
+                    this.ctx = this.cvsEl.getContext("2d");
+                    this.draw();
+                    this.evsName = this.evType();
+                    // 给canvas添加事件
+                    this.evsName.forEach((evName, i) => i === 0 ? this.cvsEl.addEventListener(evName, this.evsFun[i]) : document.addEventListener(evName, this.evsFun[i]));
+                }
+                // 绘制
+                draw() {
+                    let cW = this.cvsEl.width,
+                        cH = this.cvsEl.height,
+                        c = this.ctx;
+                    c.clearRect(0, 0, cW, cH);
+                    c.globalAlpha = this.fontOp; // 设置图像透明度
+                    c.fillRect(0, 0, cW, cH);
+                    c.fillStyle = this.colors.slideColor;
+                    c.strokeStyle = this.colors.slideColor;
+                    c.lineWidth = this.strokeWidth;
+                    c.fillRect(0, 0, cW, cH);
+                    c.strokeRect(0, 0, cW, cH);
+                    // 激活背景色
+                    c.fillStyle = this.activeBgColor;
+                    c.strokeStyle = this.activeBgColor;
+                    c.fillRect(
+                        this.minX + 2,
+                        this.minX,
+                        this.offX,
+                        cH - this.strokeWidth
+                    );
+                    // 文本提示
+                    c.textAlign = "center";
+                    c.textBaseline = "middle";
+                    c.fillStyle = this.fontColor;
+                    c.font = `${this.fontSize}px 黑体`;
+                    c.fillText(this.tipTxt, cW / 2, cH / 2);
+                    // 待验证 | 验证中
+                    if (
+                        this.vfcStatu.statu === "none" ||
+                        this.vfcStatu.statu === "testing" ||
+                        this.vfcStatu.statu === "servertest" ||
+                        this.vfcStatu.statu === "tail"
+                    ) {
+                        // 滑块
+                        c.beginPath();
+                        c.fillStyle = this.colors.dropColor;
+                        c.rect(
+                            this.dropX,
+                            this.minX,
+                            this.dropWidth,
+                            cH - this.strokeWidth
+                        );
+                        c.fill();
+                        // 箭头
+                        c.lineWidth = 2;
+                        // 右边箭头
+                        c.moveTo(
+                            this.dropX + this.dropWidth / 1.7 - 5,
+                            this.strokeWidth + 10
+                        );
+                        c.lineTo(this.dropX + this.dropWidth / 1.7 + 5, cH / 2);
+                        c.lineTo(
+                            this.dropX + this.dropWidth / 1.7 - 5,
+                            cH - this.strokeWidth - 10
+                        );
+                        // 左边箭头
+                        c.moveTo(
+                            this.dropX + this.dropWidth / 1.7 - 15,
+                            this.strokeWidth + 10
+                        );
+                        c.lineTo(this.dropX + this.dropWidth / 1.7 - 5, cH / 2);
+                        c.lineTo(
+                            this.dropX + this.dropWidth / 1.7 - 15,
+                            cH - this.strokeWidth - 10
+                        );
+                        c.stroke();
+                        c.closePath();
+
+                        // 验证成功
+                    } else if (this.vfcStatu.statu === "success") {
+                        // 滑块
+                        c.beginPath();
+                        c.fillStyle = this.colors.dropColor;
+                        c.rect(
+                            this.dropX,
+                            this.minX,
+                            this.dropWidth,
+                            cH - this.strokeWidth
+                        );
+                        c.fill();
+                        c.closePath();
+
+                        // 圈
+                        c.beginPath();
+                        c.fillStyle = this.colors.successBgColor;
+                        c.arc(
+                            this.dropWidth / 2 + this.dropX,
+                            cH / 2,
+                            cH / 3,
+                            0,
+                            2 * Math.PI
+                        );
+                        c.fill();
+                        c.closePath();
+
+                        // 勾
+                        c.beginPath();
+                        c.lineWidth = 3;
+                        c.lineJoin = "bevel";
+                        c.lineCap = "round";
+                        c.strokeStyle = this.colors.dropColor;
+                        c.moveTo(this.dropX + this.dropWidth / 2 - 8, cH / 2 + 1);
+                        c.lineTo(this.dropX + this.dropWidth / 2.1, cH / 1.6);
+                        c.lineTo(this.dropX + this.dropWidth / 2 + 8, cH / 2 - 5);
+                        c.stroke();
+                        c.closePath();
+                    }
+                }
+                // 滑块按下
+                down(ev) {
+                    if (this.vfcStatu.statu === "testing" || this.vfcStatu.statu === "servertest")
+                        return;
+                    this.setXY(ev);
+                    //按下滑块
+                    this.isDown = true;
+                    this.startTime = new Date().getTime();
+                    // 若按下滑块
+                    const isPath = this.ctx.isPointInPath(this.startX, this.startY);
+                    this.dwonIsPath = isPath;
+                }
+
+                // 滑块移动
+                move(ev) {
+                    if (this.vfcStatu.statu === "testing" || this.vfcStatu.statu === "servertest")
+                        return;
+                    this.setXY(ev);
+                    const isPath = this.ctx.isPointInPath(this.moveX, this.moveX);
+                    // pc 鼠标变手势
+                    if (ev.x) isPath === true ? (this.cvsClass.value = "cur") : (this.cvsClass.value = "cur-none");
+                    const x = Number(this.moveX.toFixed(2));
+                    const y = Number(this.moveY.toFixed(2));
+                    const moveTime = new Date().getTime();
+                    this.guiji.push({x, y, moveTime});
+                    if (this.dwonIsPath === false || this.moveX <= 0) return;
+                    if (this.isDown === true) {
+                        // 若滑到尾部
+                        this.toTouchEnd = this.touchDrosToEnd();
+                        if (this.toTouchEnd === true) this.up();
+                        this.draw();
+                    }
+                }
+
+                // 滑块抬起
+                up() {
+                    if (this.vfcStatu.statu === "testing" || this.vfcStatu.statu === "servertest" || this.offX === 0 || this.dwonIsPath === false || this.moveX <= 0)
+                        return;
+                    this.endTime = new Date().getTime();
+                    this.vfcres.startX = this.startX; //鼠标/手指按下位置
+                    this.vfcres.endX = this.dropX + this.dropWidth + this.minX; //鼠标/手指抬起位置
+                    this.vfcres.timed = this.endTime - this.startTime; //耗时
+                    this.vfcres.guiji = this.guiji; //滑动轨迹
+                    this.vfcres.width = this.cvsEl.width;
+                    this.dwonIsPath = false;
+                    this.isDown = false;
+                    // 未滑动到尾部
+                    if (this.toTouchEnd === false) {
+                        this.dropX = this.minX; // 滑块位置
+                        this.offX = 0;
+                        this.tipTxt = this.allTipTxts.failTip;
+                        this.fontColor = this.colors.tipTailColor;
+                        // 滑动到尾部
+                    } else {
+                        this.vfcStatu.statu = "testing";
+                        this.testAdmate(); //开启动画
+                        // 验证中
+                        this.fontColor = this.colors.tipTestIngColor;
+                        this.tipTxt = this.allTipTxts.testTip;
+                        this.activeBgColor = this.colors.testIngBgColor;
+                        this.dropX = this.maxX + this.minX; // 滑块位置
+                        const test = this.testVer();
+                        setTimeout(() => {
+                            // 前端验证通过
+                            if (test === "success") {
+                                // 已开启前端验证模式
+                                if (this.servertest === true) {
+                                    this.vfcStatu.statu = "servertest";
+                                } else {
+                                    this.vfcStatu.statu = "success";
+                                }
+                            } else {
+                                this.vfcStatu.statu = "tail";
+                            }
+                        }, 1000);
+                    }
+                    this.draw();
+                    this.guiji = [];
+                }
+                // 重置滑块
+                reset() {
+                    console.log("调用了reset");
+                    this.dropX = this.minX; // 滑块位置
+                    this.anmateOff = false;
+                    this.activeBgColor = this.colors.activeBgColor;
+                    this.fontColor = this.colors.tipNoneColor;
+                    this.tipTxt = this.allTipTxts.tipTxt;
+                    this.offX = 0;
+                    this.toTouchEnd = false;
+                    this.guiji = [];
+                    this.slideColor = this.colors.slideColor;
+                    this.testIngBgColor = this.colors.testIngBgColor;
+                    this.successBgColor = this.colors.successBgColor;
+                    this.vfcStatu.statu = "none";
+                    this.ctx.fillStyle = "#ffffff";
+                    this.ctx.strokeStyle = "#ffffff";
+                    this.draw();
+                }
+                // 解绑事件
+                evNone() {
+                    this.evsName.forEach((evName, i) =>
+                        i === 0
+                            ? this.cvsEl.removeEventListener(evName, this.evsFun[i])
+                            : document.removeEventListener(evName, this.evsFun[i])
+                    );
+                }
+                // 验证中动画
+                testAdmate() {
+                    // 文本透明度
+                    if (this.met === false && this.fontOp >= 1) {
+                        this.met = true;
+                    } else if (this.met === true && this.fontOp <= 0.5) {
+                        this.met = false;
+                    }
+                    this.met === false ? (this.fontOp += 0.015) : (this.fontOp -= 0.015);
+                    this.draw();
+                    cancelAnimationFrame(this.testAm);
+                    this.testAm = window.requestAnimationFrame(
+                        this.testAdmate.bind(this)
+                    );
+                    if (this.anmateOff === false) {
+                        cancelAnimationFrame(this.testAm);
+                        this.fontOp = 1;
+                        this.testAm = null;
+                        this.met = false;
+                        this.anmateOff = true;
+                    }
+                    this.draw();
+                }
+                touchDrosToEnd() {
+                    const x = this.offX + this.dropWidth + this.strokeWidth;
+                    const isSuccess = x >= this.cvsEl.width;
+
+                    return isSuccess;
+                }
+                // 设置xy坐标
+                setXY(ev) {
+                    if (ev.type === "touchstart") {
+                        this.startX = ev.touches[0].clientX - this.cvsEl.getBoundingClientRect().left;
+                        this.startY = ev.touches[0].clientY - this.cvsEl.getBoundingClientRect().top;
+                    }
+                    if (ev.type === "touchmove") {
+                        this.moveX = ev.touches[0].clientX - this.cvsEl.getBoundingClientRect().left;
+                        this.moveY = ev.touches[0].clientY - this.cvsEl.getBoundingClientRect().top;
+                    }
+                    // ///pc事件 //
+                    if (ev.type === "mousedown") {
+                        this.startX = ev.x - this.cvsEl.getBoundingClientRect().left;
+                        this.startY = ev.y - this.cvsEl.getBoundingClientRect().top;
+                    }
+                    if (ev.type === "mousemove") {
+                        this.moveX = ev.x - this.cvsEl.getBoundingClientRect().left;
+                        this.moveY = ev.y - this.cvsEl.getBoundingClientRect().top;
+                    }
+                    // 防止滑块溢出指定范围
+                    if (ev.type === "mousemove" || ev.type === "touchmove") {
+                        this.offX = this.moveX - this.startX;
+                        if (this.offX > this.maxX) this.offX = this.maxX;
+                        if (this.offX < this.minX) this.offX = this.minX;
+                        this.dropX = this.minX + this.offX; // 滑块位置
+                    }
+                }
+                // 事件类型
+                evType() {
+                    const isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i) !== null;
+                    const events = isMobile ? ["touchstart", "touchmove", "touchend"] : ["mousedown", "mousemove", "mouseup"];
+                    return events;
+                }
+                arrCmp() {
+                    // 重复的数量
+                    const repeatX = [];
+                    const repeatY = [];
+                    const timed = [];
+                    const chaArr = this.guiji.reduce((prev, itm, i, arr) => {
+                        if (i === arr.length - 1) return prev;
+                        const nv = arr[i + 1];
+                        const chaX = Number((nv.x - itm.x).toFixed(2));
+                        const chaY = Number((nv.y - itm.y).toFixed(2));
+                        const timeCha = nv.moveTime - itm.moveTime;
+                        timed.push(timeCha); //时间差
+                        // 是否有重复的数组
+                        const repeatXIndex = repeatX.findIndex(
+                            (item) => item.num === chaX
+                        );
+                        const repeatYIndex = repeatY.findIndex(
+                            (item) => item.num === chaY
+                        );
+                        // xy轴每2数差数据
+                        if (repeatXIndex === -1) {
+                            const obj = {num: chaX, count: 1,};
+                            repeatX.push(obj);
+                        } else {
+                            repeatX[repeatXIndex].count++;
+                        }
+                        if (repeatYIndex === -1) {
+                            const obj = {num: chaY, count: 1,};
+                            repeatY.push(obj);
+                        } else {
+                            repeatY[repeatYIndex].count++;
+                        }
+                        prev.push({x: chaX, y: chaY});
+                        return prev;
+                    }, []);
+
+                    // 所有重复次数
+                    const findXCount = [];
+                    const findYCount = [];
+                    repeatX.forEach((it) => findXCount.push(it.count));
+                    repeatY.forEach((it) => findYCount.push(it.count));
+                    const repeatMaxXCount = Math.max(...findXCount); //x重复最多的次数
+                    const repeatMaxYCount = Math.max(...findYCount); //y重复最多的次数
+                    const repeatMaxTimed = Math.max(...timed); //滑动时间重复最多的次数
+                    return {chaArr, repeatX, repeatY, repeatMaxXCount, repeatMaxYCount, repeatMaxTimed,};
+                }
+                testVer() {
+                    // 滑动所用时间低于50毫秒 是人机
+                    if (this.vfcres.timed < 50) return "tail";
+                    const sliderInfo = this.arrCmp(); //处理滑动轨迹信息
+                    // 时间波动最大次数等于sliderInfo.chaArr.length滑动轨迹长度为人机
+                    const timeTest = sliderInfo.repeatMaxTimed === sliderInfo.chaArr.length;
+                    if (timeTest === true) return "tail";
+                    // x轴最大波动大于数等于所有波动长度则为人机
+                    if (sliderInfo.repeatMaxXCount === sliderInfo.repeatX)
+                        return "tail";
+                    //  y轴最大波动数等于所有波动长度则为人机
+                    if (sliderInfo.repeatMaxYCount === sliderInfo.chaArr.length)
+                        return "tail";
+                    // 是真人
+                    return "success";
+                }
+            }
+            const colors = reactive({
+                activeBgColor: verifyObj.activeBgColor,
+                testIngBgColor: verifyObj.testIngBgColor,
+                successBgColor: verifyObj.successBgColor,
+                tipSucColor: verifyObj.tipSucColor,
+                tipTailColor: verifyObj.tipTailColor,
+                tipTestIngColor: verifyObj.tipTestIngColor,
+                tipNoneColor: verifyObj.tipNoneColor,
+                dropColor: verifyObj.dropColor,
+                slideColor: verifyObj.slideColor,
+            });
+            const tipTxt = reactive({
+                testTip: verifyObj.testTip,
+                tipTxt: verifyObj.tipTxt,
+                successTip: verifyObj.successTip,
+                failTip: verifyObj.failTip,
+            });
+            const generateCaptcha = async () => {
+                await formRef.value.validate(["phoneNumber", "email"]);
+                state.passVerification = false;
+                if (!state.passVerification) {
+                    showVerify.value = true;
+                    nextTick(() => {
+                        console.log("cvs.value", cvs.value);
+                        vfcx = new Vfcs(cvs.value, cvsClass, vfcres, vfcStatu, verifyObj.strokeWidth, verifyObj.dropWidth, verifyObj.fontSize, verifyObj.servertest, colors, tipTxt);
+                    });
+                }
+            };
+            return {
+                ...toRefs(state),
+                generateCaptcha,
+                handleSubmit,
+                formatSliderTooltip,
+                selectArr,
+                showSelect,
+                selectConfirm,
+                validateMobile,
+                validateEmail,
+                showVerify,
+                verifyObj,
+                cvsClass,
+                cvs,
+                computedCountDowm,
+                onFailed,
+                formRef,
+            };
+        },
+    });
+    app.use(vant);
+    app.mount("#app");
+</script>
+</body>
+</html>

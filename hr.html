@@ -1,0 +1,3442 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="./comon/vant4.css"/>
+
+    <!-- 引入 Vue 和 Vant 的 JS 文件 -->
+    <script src="./comon/vue3.js"></script>
+    <script src="./comon/vant.min.js"></script>
+    <!-- 引入axios -->
+    <script src="./comon/axios.min.js"></script>
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>博彦科技</title>
+</head>
+
+<body>
+<div id="app">
+    <!-- 隐私协议 -->
+    <van-dialog class="yscss" async-close v-model:show="show" title="隐私政策" :show-cancel-button="true"
+                :before-close="onBeforeClose">
+        <p class="text_indent">
+            欢迎您成为博彦科技股份有限公司及附属机构（以下简称“博彦科技”）一员，并成为E-cology
+            办公平台的注册用户，我们非常重视您的隐私和个人信息保护。本隐私政策适用于您对E-cology的访问和使用留存的信息。
+        </p>
+        <p class="text_indent">
+            本隐私政策仅适用于E-cology产品和服务。本隐私政策旨在帮助您了解以下内容：
+        </p>
+        <p class="text_indent">
+            一、我们如何收集和使用您的个人信息
+        </p>
+        <p class="text_indent">
+            二、我们如何使用 Cookie 和同类技术
+        </p>
+        <p class="text_indent">
+            三、我们如何共享、转让、公开披露您的个人信息
+        </p>
+        <p class="text_indent">
+            四、我们如何保护您的个人信息
+        </p>
+        <p class="text_indent">
+            五、您的权利
+        </p>
+        <p class="text_indent">
+            六、响应您的上述请求
+        </p>
+        <p class="text_indent">
+            七、您的个人信息如何在全球范围内转移
+        </p>
+        <p class="text_indent">
+            八、隐私政策的变更和修订
+        </p>
+        <p class="text_indent">
+            九、如何联系我们
+        </p>
+        <p class="text_indent">
+            十、隐私政策的生效
+        </p>
+        <p class="text_indent">
+            请在使用E-cology前，务必仔细阅读并了解本《隐私政策》，在确认充分理解并同意后使用我们的产品或服务。一旦您开始使用E-cology，即表示您已充分理解并同意本政策，并同意我们按照本隐私政策收集、使用、储存和分享您的相关信息。如对本政策内容有任何疑问、意见或建议，您可通过本隐私政策提供的各种联系方式与我们联系。
+
+        </p>
+
+        <p class="text_indent bold">
+            一、我们如何收集和使用您的个人信息
+        </p>
+        <p class="text_indent">
+            为了提高日常办公效能，在您成为博彦科技正式员工时，您需要使用E-Cology产品和服务，以便您在博彦工作期间顺利开展工作，因此，我们可能会收集、保存和使用下列与您有关的信息才能实现上述这些功能。如果您不提供相关信息，您将无法享受相关服务。
+        </p>
+        <p class="text_indent">
+            （一）我们会出于本隐私政策所述的以下目的，收集和使用您的个人信息：
+        </p>
+        <p class="text_indent">
+            1、E-Cology用户注册，正式入职时需注册成为E-Cology的用户，以满足日常办公需要；
+        </p>
+        <p class="text_indent">
+            2、办理在博彦科技工作期间的个税缴纳、社保公积金缴纳、薪资发放、紧急联系、背景调查、组织关系调动、费用报销、信息核实、信息送达、员工管理等事项；
+        </p>
+        <p class="text_indent">
+            3、如人员为外包人员，经客户方要求，相关信息可能用于办理客户方入场手续及在客户方提供服务使用或项目招投标使用。
+        </p>
+        <p class="text_indent">
+            （二）因上述对信息的使用可能是多项或交叉的，因此，我们需要综合收集和使用您的下列信息：
+        </p>
+        <p class="text_indent">
+            1、信息类型
+        </p>
+        <p class="text_indent">
+            （1）基本信息: 姓名、国籍、民族、出生日期、籍贯、户口性质、婚姻状况、生育状况、档案存放情况
+        </p>
+        <p class="text_indent">
+            （2）身份信息：证件类型（身份证、护照或其他）、证件号码
+        </p>
+        <p class="text_indent">
+            （3）政治面貌：党员、其他
+        </p>
+        <p class="text_indent">
+            （4）英语水平：英语、日语、其他
+        </p>
+        <p class="text_indent">
+            （5）联系方式：现居地址、现居地邮编、家庭地址、家庭地址邮编、家庭电话、手机号码、Email
+        </p>
+        <p class="text_indent">
+            （6）财产信息：银行类别、开户行名称、银行卡号
+        </p>
+        <p class="text_indent">
+            （7）学习经历：开始日期、结束日期、教育类型、学历证书、学位、机构/学校、学习内容（专业）、员工技能证书
+        </p>
+        <p class="text_indent">
+            （8）工作经历:首次参加工作的时间、开始日期、结束日期、单位、职务、联系人及电话
+        </p>
+        <p class="text_indent">
+            （9）家庭信息：家庭人员姓名、所在单位、关系、联系电话
+        </p>
+        <p class="text_indent">
+            （10）社保信息：新建社保（参加险种、委托代发银行卡号、公积金账号）；续保信息（姓名、身份证号、五险一金缴纳截止日期、定点医疗）
+        </p>
+        <p class="text_indent">
+            2、您提供的上述信息，将在您工作期间持续授权我们使用，在您离职时，我们将停止使用上述信息。上述信息我们将保留2年，保留期届满，将予以删除。
+        </p>
+        <p class="text_indent">
+            3、上述信息将存储于中国人民共和国境内，如需跨境传输，我们将单独征得您的授权同意。
+        </p>
+
+        <p class="text_indent">
+            4、当我们要将信息用于本隐私政策未载明的其他用途，或基于特定目的收集而来的信息用于其他目的时，会事先征求您的同意。
+        </p>
+        <p class="text_indent bold">
+            二、我们如何使用 Cookie 和同类技术
+        </p>
+        <p class="text_indent ">
+            （一）cookie
+        </p>
+        <p class="text_indent ">
+            为确保网站正常运转，我们会在您的计算机或移动设备上存储名为 Cookie 的小数据文件。Cookie
+            通常包含标识符、站点名称以及一些号码和字符。Cookie主要的功能是便于您使用网站产品和服务，运用Cookie技术，我们能够为您提供更加周到的个性化服务。
+        </p>
+        <p class="text_indent ">
+            我们不会将 Cookie 用于本隐私政策所述目的之外的任何用途。您可根据自己的偏好管理或删除 Cookie。有关详情请参见
+            AboutCookies.org。您可以清除计算机上保存的所有
+            Cookie，大部分网络浏览器都设有阻止 Cookie
+            的功能。但如果您这么做，则需要在每一次访问我们的网站时亲自更改用户设置。您可以通过更改您的浏览器设置限制我们对Cookie的使用。具体路径如下：
+        </p>
+        <p class="text_indent ">
+            IE浏览器Cookie数据位于：%APPDATA%\Microsoft\Windows\Cookies\ 目录中的xxx.txt文件；
+        </p>
+        <p class="text_indent ">
+            Firefox的Cookie数据位于：%APPDATA%\Mozilla\Firefox\Profiles\ 目录中的xxx.default目录，名为cookies.sqlite的文件
+        </p>
+        <p class="text_indent ">
+            （二）DO Not Track (请勿追踪)
+        </p>
+        <p class="text_indent ">
+            很多网络浏览器均设有DO Not Track功能，该功能可向网站发布DO Not
+            Track请求。目前，主要互联网标准组织尚未设立相关政策规定网站应如何应对此类请求，但如果您的浏览器启用了DO Not
+            Track，那我们的所有网站都会尊重您的选择。
+        </p>
+        <p class="text_indent bold">
+            三、我们如何共享、转让、公开披露您的个人信息
+        </p>
+        <p class="text_indent ">
+            （一）共享
+        </p>
+        <p class="text_indent ">
+            我们不会与任何公司、组织和个人共享您的个人信息，但以下情况除外：
+        </p>
+        <p class="text_indent ">
+            1、在获得您明确同意的情况下，我们会与其他方共享您的个人信息。
+        </p>
+        <p class="text_indent ">
+            2、我们可能会根据法律法规规定、诉讼争议解决需要，或按行政、司法机关依法提出的要求，对外共享您的个人信息。
+        </p>
+        <p class="text_indent ">
+            3、我们可能将您的个人信息与我们的关联方共享，我们只会共享必要的个人信息，且受本隐私政策中所声明目的的约束，关联方如要改变个人信息的处理目的，将再次征求您的授权同意。
+        </p>
+        <p class="text_indent ">
+            4、我们可能会与合作伙伴等第三方共享您的某些个人信息，以便更好地履行工作职责。我们仅会出于合法、正当、必要、特定、明确的目的共享您的个人信息，并且只会共享与提供服务相关的个人信息。我们的合作伙伴无权将共享的个人信息用于任何其他用途。
+        </p>
+        <p class="text_indent ">
+            对我们与之共享个人信息的公司、组织和个人，我们会与其签署严格的保密协定，要求他们按照我们的说明、本隐私政策以及其他任何相关的保密和安全措施来处理个人信息。
+        </p>
+        <p class="text_indent ">
+            （二）转让
+        </p>
+        <p class="text_indent ">
+            我们不会将您的个人信息转让给其他任何公司、组织和个人，但以下情形除外：
+        </p>
+        <p class="text_indent ">
+            1、事先获得您的明确授权或同意；
+        </p>
+        <p class="text_indent ">
+            2、根据法律法规、法律程序、诉讼或政府主管部门强制性要求；
+        </p>
+        <p class="text_indent ">
+            3、如果涉及合并、分立、清算、资产或业务的收购或出售等交易时，如涉及到个人信息转让，我们会要求新的持有您个人信息的公司、组织继续受此隐私政策的约束，否则我们将要求该公司、组织重新向您征求授权同意。
+        </p>
+        <p class="text_indent ">
+            （三）公开披露
+        </p>
+        <p class="text_indent ">
+            我们仅会在以下情况下，公开披露您的个人信息：
+        </p>
+        <p class="text_indent ">
+            1、获得您的明确同意；
+        </p>
+        <p class="text_indent ">
+            2、在法律、法律程序、诉讼或政府主管部门强制性要求的情况下。
+        </p>
+        <p class="text_indent ">
+            （四）共享、转让、公开披露个人信息时事先征得授权同意的例外
+        </p>
+        <p class="text_indent ">
+            在以下情形中，共享、转让、公开披露您的个人信息无需事先征得您的授权同意：
+        </p>
+        <p class="text_indent ">
+            1、与国家安全、国防安全直接相关的；
+        </p>
+        <p class="text_indent ">
+            2、与公共安全、公共卫生、重大公共利益直接相关的；
+        </p>
+        <p class="text_indent ">
+            3、与犯罪侦查、起诉、审判和判决执行等直接相关的；
+        </p>
+        <p class="text_indent ">
+            4、出于维护您或其他个人、组织的等合法权益的；
+        </p>
+        <p class="text_indent ">
+            5、您自行向社会公众公开的个人信息；
+        </p>
+        <p class="text_indent ">
+            6、从政府信息公开等合法渠道收集个人信息的；
+        </p>
+        <p class="text_indent ">
+            7、法律法规规定的其他情形。根据法律规定，共享、转让经去标识化处理的个人信息，且确保数据接收方无法复原并重新识别个人信息主体的，不属于个人信息的对外共享、转让及公开披露行为，对此类数据的保存及处理将无需另行向您通知并征得您的同意。
+        </p>
+        <p class="text_indent bold ">
+            四、我们如何保护您的个人信息
+        </p>
+        <p class="text_indent ">
+            为保障您的信息安全，我们努力采取各种符合业界标准的物理、电子和管理方面的安全措施来保护您的个人信息，建立数据分类分级制度、数据安全管理规范、数据安全开发规范来管理规范个人信息的存储和使用。我们通过信息接触者保密协议、监控和审计机制来对数据进行全面安全控制。防止您的个人信息遭到未经授权访问、公开披露、使用、修改、损坏或丢失。例如在您的浏览器与“服务”之间交换数据时采用SSL加密保护技术；同时对网站本身提供https安全浏览方式;使用加密技术确保数据的保密性;使用受信赖的保护机制防止数据遭到恶意攻击;部署访问控制机制，确保只有授权人员才可访问个人信息；我们已先后通过了ISO27001，ISO20000，ISO9000信息安全管理体系国际认证等认证资质，并与监管机构、第三方测评机构建立了良好的协调沟通机制，及时抵御并处置各类信息安全威胁；以及举办安全和隐私保护培训课程，加强员工对于保护个人信息重要性的认识；为您的信息安全提供全方位保障。
+        </p>
+        <p class="text_indent bold ">
+            五、您的权利
+        </p>
+        <p class="text_indent ">
+            我们非常重视您对个人信息的关注，并尽全力保护您对于您个人信息访问、更正、删除以及撤回同意的权利，以使您拥有充分的能力保障您的隐私和安全，
+            在您使用E-cology期间，您可以通过以下方式访问并管理您的个人信息：
+        </p>
+        <p class="text_indent ">
+            （一）访问您的个人信息
+        </p>
+        <p class="text_indent ">
+            您有权访问您的个人信息，法律法规规定的例外情况除外。您可以通过以下方式自行访问您的个人信息：
+            账户信息——如果您希望访问您的账户中的个人基本资料信息、联系方式信息、更改您的密码、添加安全信息等，您可以通过E-cology执行此类操作。
+            如果您想行使数据访问权，请登录E-cology系统查看相应的内容。您在使用我们的产品和服务过程中产生的其他个人信息，只要我们不需要过多投入，我们会向您提供，您可通过is@beyondsoft.com与我们联系。
+        </p>
+        <p class="text_indent ">
+            （二）更正您的个人信息
+        </p>
+        <p class="text_indent ">
+            您应准确填写您的个人信息，填写过程中如您填写有误或信息变更，您可以通过E-cology对上述信息进行更正；信息提交后如您发现我们处理的关于您的个人信息有错误时，您可以通过hrrz@beyondsoft.com与我们联系。
+
+        </p>
+        <p class="text_indent ">
+            （三）删除您的个人信息
+        </p>
+        <p class="text_indent ">
+            以下情况发生时，您可以向我们提出删除您的个人信息：
+            <br/>
+            1、如果我们处理个人信息违法了法律法规；
+            <br/>
+            2、如果我们收集、使用您的个人信息，却未征得您的同意；
+            <br/>
+            3、如果我们处理个人信息的行为违反了与您的约定；
+            <br/>
+            4、如果您不再使用我们的产品或服务，或您注销了账号；
+            <br/>
+            5、如果我们不再为您提供产品或服务。
+            您可以通过本隐私政策提供的方式联系我们要求删除您的个人信息，我们会在30个工作日内给予答复。当我们从服务器中删除您的个人信息后，我们可能不会立即从备份系统中删除相应的数据，但会在备份更新的时候删除这些信息。
+        </p>
+        <p class="text_indent ">
+            （四）撤回您的同意或授权
+        </p>
+        <p class="text_indent ">
+            每个业务功能需要一些基本的个人信息才能得以完成（见本政策“第一部分”）,
+            对于额外收集的个人信息的收集和使用，您可以随时给与或收回您的授权同意。您可以通过以下方式自行操作：你可以发送邮件到is@beyondsoft.com和hr@intra.beyondsoft.com请求撤回申请，同时需要告知对应的个人信息使用部门。
+            当您撤回同意或授权后，我们无法继续为您提供撤回同意或授权所对应的服务，也将不再处理相应的个人信息。但您撤回同意的决定，不会影响此前基于您的授权而开展的个人信息处理。
+        </p>
+        <p class="text_indent ">
+            （五）个人信息主体注销账户
+        </p>
+        <p class="text_indent ">
+            在您离职后，我们会及时注销您的账户，在注销账户之后，我们将停止为您提供产品或服务，并依据本隐私政策删除您的个人信息，法律法规另有规定的除外。
+        </p>
+        <p class="text_indent ">
+            （六）提前获知产品和服务停止运营
+        </p>
+        <p class="text_indent ">
+            E-cology愿一直陪伴您，若因特殊原因导致E-cology产品和服务被迫停止运营，我们将按照法律法规要求在产品和/或服务的主页面或其他合适的能触达您的方式通知您，并将停止对您个人信息的收集，同时会按照法律规定对所持有您的个人信息进行删除或匿名化处理等。
+        </p>
+        <p class="text_indent bold">
+            六、响应您的上述请求
+        </p>
+        <p class="text_indent ">
+            为了保障安全，您可能需要提供书面请求，或以其他方式证明您的身份，我们可能会先要求您验证自己的身份，然后再处理您的请求。
+            对于您的合理地请求，我们原则上不收取费用，但对多次重复、超出合理限度的请求，我们将视情况收取一定成本费用。对于那些无端重复、需要过多技术手段（例如，需要开发新系统或从根本上改变现行惯例）、给他人合法权益带来风险或者非常不切实际（例如，涉及备份磁带上存放的信息）的请求，我们可能会予以拒绝。
+            在以下情形中，按照法律法规要求，我们将无法响应您的上述请求：
+        </p>
+        <p class="text_indent ">
+            （一）国家安全、国防安全直接相关的；
+            <br/>
+            （二）与公共安全、公共卫生、重大公共利益直接相关的；
+            <br/>
+            （三）与犯罪侦查、起诉、审判和执行判决等直接相关的；
+            <br/>
+            （四）我们有充分证据表明您存在主观恶意或滥用权利的（如您的请求将危害公共安全和其他人合法权益，或您的请求超出了一般技术手段和商业成本可覆盖的范围）；
+            <br/>
+            （五）响应您的请求将导致您或其他个人、组织的合法权益受到严重损害的；
+            <br/>
+            （六）涉及商业秘密的。
+        </p>
+        <p class="text_indent bold">
+            七、您的个人信息如何在全球范围转移
+        </p>
+        <p class="text_indent">
+            原则上，我们在境内收集和产生的个人信息，将存储于境内。如部分产品或服务涉及跨境，我们需要向境外传输您的个人信息，我们会事先获得您的书面同意并严格按照法律法规的规定执行，并保证您的个人信息安全。
+        </p>
+        <p class="text_indent bold">
+            八、隐私政策的变更和修订
+        </p>
+        <p class="text_indent">
+            随着业务的发展，我们的隐私政策可能会随时更新。但未经您明确同意，我们不会削减您按照本隐私政策所应享有的权利。我们会发布对本政策所做的任何变更。
+            若您不同意该等变更可以停止使用E-cology产品和服务，若您继续使用我们的产品和/或服务，即表示您同意受修订后的本隐私政策的约束。
+            对于本隐私政策的重大变更，我们还会提供显著的通知（例如，在软件改版或升级、或您重新登录时，以弹窗形式对您进行及时通知）。
+            本政策所指的重大变更包括但不限于：
+            <br/>
+            （一）我们的服务模式发生重大变化，如处理个人信息的目的、处理的个人信息类型、个人信息的使用方式等；
+            <br/>
+            （二）我们在所有权结构、组织架构等方面发生重大变化，如业务调整、破产并购等引起的所有者变更等；
+            <br/>
+            （三）个人信息共享、转让或公开披露的主要对象发生变化；
+            <br/>
+            （四）您参与个人信息处理方面的权利及其行使方式发生重大变化；
+            <br/>
+            （五）我们负责处理个人信息安全的责任部门、联络方式及投诉渠道发生变化时；
+            <br/>
+            （六）个人信息安全影响评估报告表明存在高风险时。
+        </p>
+        <p class="text_indent bold">
+            九、如何联系我们
+        </p>
+        <p class="text_indent">
+            如果您对我们的隐私政策及对您个人信息的处理有任何疑问、意见、建议或投诉，请通过以下方式与我们联系。
+            <br/>
+            网址：https://e-cology.beyondsoft.com
+            <br/>
+            邮箱：is@beyondsoft.com
+            <br/>
+            在一般情况下，我们会在30个工作日内对您的请求予以答复。
+        </p>
+        <p class="text_indent bold">
+            十、隐私政策的生效
+        </p>
+        <p class="text_indent">
+            本隐私政策版本于【2019】年【09】月【01】日正式生效。
+            <br/>
+            您可通过网站查看我们有关隐私保护的详细内容，网址为：https://e-cology.beyondsoft.com
+        </p>
+        <p>
+            <van-checkbox v-model="isAgree" shape="square">
+                【已阅读并知悉《隐私政策》内容，同意按照《隐私政策》授权公司使用个人信息】
+            </van-checkbox>
+        </p>
+
+    </van-dialog>
+    <!-- 填写的扁担数据 -->
+    <van-form @submit="ruZhiInfoSubmit" class="form" @failed="onFailed" ref="userInfoFormDom">
+        <van-row>
+            <van-col span="24">
+                <van-cell-group inset>
+                    <van-field
+                            v-model="userInfoForm.companyText"
+                            is-link
+                            readonly
+                            required
+                            name="company"
+                            label="入职公司 :"
+                            placeholder="选择入职公司"
+                            @click="userInfoForm.showPickerCompany = true"
+                            :rules="[{ required: true, message: '入职公司必选' }]"
+                    ></van-field>
+
+                    <!-- 修改后的公司选择器弹窗 - 带搜索功能 -->
+                    <van-popup v-model:show="userInfoForm.showPickerCompany" round position="bottom"
+                               style="height: 50%;">
+                        <div style="height: 100%; display: flex; flex-direction: column;">
+                            <!-- 搜索框 -->
+                            <van-search
+                                    v-model="companySearchText"
+                                    placeholder="请输入公司名称搜索"
+                                    @update:model-value="filterCompanys"
+                                    style="flex-shrink: 0;"></van-search>
+
+                            <!-- 公司列表 -->
+                            <div style="flex: 1; overflow-y: auto;">
+                                <van-cell-group>
+                                    <van-cell
+                                            v-for="(item, index) in filteredCompanys"
+                                            :key="index"
+                                            :title="item.text"
+                                            clickable
+                                            @click="onCompanyConfirm(item)"></van-cell>
+                                </van-cell-group>
+                            </div>
+                        </div>
+                    </van-popup>
+                </van-cell-group>
+            </van-col>
+        </van-row>
+
+        <van-row class="rowinfo">
+            <van-col span="23" justify="center">
+                <van-collapse v-model="activeNames">
+                    <van-collapse-item title="基本信息 :" name="1">
+                        <van-cell-group inset>
+                            <van-field v-model="userInfoForm.name" name="name" label="*姓名 :" placeholder="请输入姓名"
+                                       :rules="[{ required: true, message: '姓名不能为空' }]"/>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-field v-model="userInfoForm.pinyin" name="pinyin" label="*姓名全拼 :"
+                                       placeholder="请输入姓名全拼"
+                                       :rules="[{ required: true, message: '姓名全拼不能为空' },{ pattern: /^[a-zA-Z]+$/, message: '姓名全拼只能包含英文字母' }]"/>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-field name="sex" label="*性别 :" :rules="[{ required: true, message: '请选择性别' }]">
+                                <template #input>
+                                    <van-radio-group v-model="userInfoForm.sex" direction="horizontal">
+                                        <van-radio name="0">男</van-radio>
+                                        <van-radio name="1">女</van-radio>
+                                    </van-radio-group>
+                                </template>
+                            </van-field>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-field v-model="userInfoForm.countryText" is-link readonly name="country"
+                                       label="*国家 :" placeholder="请选择国家"
+                                       @click="userInfoForm.showPickerCountry = true"
+                                       :rules="[{ required: true, message: '国家必填' }]"/>
+                        </van-cell-group>
+                        <van-cell-group inset v-show="userInfoForm.showNation">
+                            <van-field v-model="userInfoForm.nationText" is-link readonly name="nation"
+                                       label="*民族 :" placeholder="请选择民族"
+                                       @click="userInfoForm.showPickerNation = true"/>
+                        </van-cell-group>
+                        <van-cell-group inset v-show="userInfoForm.showIdType">
+                            <van-field v-model="userInfoForm.idTypeText" is-link readonly name="idType"
+                                       label="*证件类型 :" placeholder="请选择证件类型"
+                                       @click="userInfoForm.showPickeridType = true"
+                                       :rules="[{ required: true, message: '证件类型必填' }]"/>
+                        </van-cell-group>
+                        <van-cell-group inset v-show="userInfoForm.showIdType">
+                            <van-field v-model="userInfoForm.idNumber" name="idNumber" label="*证件号 :"
+                                       placeholder="请输入证件号"
+                                       :rules="[{required: true,validator: validateIdNumber,message: '证件号必填'}]"/>
+                        </van-cell-group>
+                        <van-cell-group inset v-show="userInfoForm.showIdNumberStartDate">
+                            <van-field v-model="userInfoForm.idNumberStartDate" is-link readonly
+                                       name="idNumberStartDate" label="*身份证有效开始日期 :"
+                                       placeholder="请输入身份证有效开始日期"
+                                       @click="userInfoForm.showPickeridNumberStartDate = true"
+                                       :rules="[{required: userInfoForm.idNumberStartDateRequired,message: '身份证有效开始日期必填'}]"/>
+                        </van-cell-group>
+                        <van-cell-group inset v-show="userInfoForm.showIdNumberEndDate">
+                            <van-field v-model="userInfoForm.idNumberEndDate" is-link readonly name="idNumberEndDate"
+                                       label="*身份证有效结束日期 :"
+                                       placeholder="请输入身份证有效结束日期"
+                                       @click="userInfoForm.showPickeridNumberEndDate = true"
+                                       :rules="[{required: userInfoForm.idNumberEndDateRequired,message: '身份证有效结束日期必填'}]"/>
+                        </van-cell-group>
+
+                        <van-cell-group inset>
+                            <van-field v-model="userInfoForm.birthday" is-link readonly name="birthday"
+                                       label="*出生日期 :" placeholder="请选择出生日期"
+                                       @click="userInfoForm.showPickerBirthday = true"
+                                       :rules="[{required: true,message: '出生日期必填'}]"/>
+                        </van-cell-group>
+
+                        <van-cell-group inset>
+                            <van-field v-model="userInfoForm.polityText" is-link readonly name="polity"
+                                       label="*政治面貌 :" placeholder="请选择政治面貌"
+                                       @click="userInfoForm.showPickerPolity = true"
+                                       :rules="[{required: true,message: '政治面貌必选'}]"/>
+                        </van-cell-group>
+                        <van-cell-group inset v-if="userInfoForm.showHukou">
+                            <van-field v-model="userInfoForm.selectedPlaces1Text" is-link readonly
+                                       name="selectedPlaces1" label="*出生地 :" placeholder="请选择出生地"
+                                       @click="userInfoForm.showPickerSelectedPlaces1= true" :key="1"
+                                       :rules="[{required: true,message: '请选择出生地'}]"/>
+                        </van-cell-group>
+                        <van-cell-group inset v-if="userInfoForm.showHukou">
+                            <van-field v-model="userInfoForm.selectedPlaces2Text" name="selectedPlaces2"
+                                       label="*籍贯 :" placeholder="请选择籍贯" is-link readonly
+                                       @click="userInfoForm.showPickerSelectedPlaces2= true" :key="3"
+                                       :rules="[{required: true,message: '请选择籍贯'}]"/>
+                        </van-cell-group>
+                        <van-cell-group inset v-if="userInfoForm.showHukou">
+                            <van-field :key="3" v-model="userInfoForm.selectedPlaces3Text" name="selectedPlaces3"
+                                       label="*户口 :" placeholder="请选择户口" is-link readonly
+                                       @click="userInfoForm.showPickerSelectedPlaces3= true"
+                                       :rules="[{required: true,message: '请选择户口'}]"/>
+                        </van-cell-group>
+
+                        <van-cell-group inset v-if="userInfoForm.showHukou">
+                            <van-field :key="4" v-model="userInfoForm.accountTypeText" name="accountType"
+                                       label="*户口性质 :" placeholder="请选择户口性质"
+                                       @click="userInfoForm.showPickerAccountType= true" is-link readonly
+                                       :rules="[{required: true,message: '请选择户口性质'}]"/>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-field v-model="userInfoForm.marryText" name="marry" label="*婚姻状况 :" is-link
+                                       readonly placeholder="请选择婚姻状况" @click="userInfoForm.showPickerMarry= true"
+                                       :rules="[{required: true,message: '婚姻状况必选'}]"/>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-field v-model="userInfoForm.fertilityText" name="fertility" label="*生育情况 :" is-link
+                                       readonly placeholder="请选择生育情况"
+                                       @click="userInfoForm.showPickerFertility= true"
+                                       :rules="[{required: true,message: '生育情况必选'}]"/>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-field v-model="userInfoForm.offerTypeText" name="offerType" label="*聘用身份 :" is-link
+                                       readonly placeholder="请选择聘用身份"
+                                       @click="userInfoForm.showPickerOfferType= true"
+                                       :rules="[{required: true,message: '聘用身份必选'}]"/>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-field name="delivery" label="是否返聘"
+                                       @click="userInfoForm.showLizhiYuan= !userInfoForm.showLizhiYuan">
+                                <template #input>
+                                    <van-switch size="18px" v-model="userInfoForm.delivery"/>
+                                </template>
+                            </van-field>
+                        </van-cell-group>
+                        <van-cell-group inset v-show="userInfoForm.showLizhiYuan">
+                            <van-field v-model="userInfoForm.resignReason" name="idNumber" label="离职原因 :"
+                                       placeholder="请输入离职原因"/>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-field v-model="userInfoForm.degreeText" name="degree" label="*最高学历 :" is-link
+                                       readonly placeholder="请选择最高学历"
+                                       @click="userInfoForm.showPickerDegree= true"
+                                       :rules="[{required: true,message: '请选择最高学历'}]"/>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-field v-model="userInfoForm.school" name="school" label="*毕业院校 :"
+                                       :rules="[{required: true,message: '毕业院校必填'}]"
+                                       placeholder="请输入毕业院校"/>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-field v-model="userInfoForm.profession" name="profession" label="*专业 :"
+                                       :rules="[{required: true,message: '专业必填'}]" placeholder="请输入专业"/>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-field v-model="userInfoForm.xlzsbh" name="xlzsbh" label="学历证书编号:"
+                                       placeholder="请学历证书编号"/>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-field v-model="userInfoForm.xwzsbh" name="xwzsbh" label="学位证书编号:"
+                                       placeholder="请学位证书编号"/>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-field v-model="userInfoForm.enLevelText" name="enLevel" label="英语等级 :" is-link
+                                       readonly placeholder="请选择英语等级"
+                                       @click="userInfoForm.showPickerEnLevel= true"/>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-field v-model="userInfoForm.jpLevelText" name="jpLevel" label="日语等级 :" is-link
+                                       readonly placeholder="请选择日语等级"
+                                       @click="userInfoForm.showPickerJpLevel= true"/>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-field v-model="userInfoForm.currentAddress" name="currentAddress" label="*现居地址 :"
+                                       :rules="[{required: true,message: '现居地址必填'}]"
+                                       placeholder="请输入现居地址(请填写详细至门牌号)"/>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-field v-model="userInfoForm.familyAddress" name="familyAddress" label="*家庭地址 :"
+                                       :rules="[{required: true,message: '家庭地址必填'}]"
+                                       placeholder="请输入家庭地址(请填写详细至门牌号)"/>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-field v-model="userInfoForm.addressTypeText" name="addressType"
+                                       label="本人与公司通讯地址以为准 :"
+                                       placeholder="请选择" @click="userInfoForm.showPickerAddressType= true"
+                                       :rules="[{required: true,message: '本人与公司通讯地址以为准'}]"/>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-field v-model="userInfoForm.contactTel" name="contactTel" label="*紧急人联系电话 :"
+                                       :rules="[{required: true,validator: validateMobile,message: '紧急人联系电话必填'}]"
+                                       placeholder="请输入紧急人联系电话"/>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-field v-model="userInfoForm.mobile" name="mobile" label="*个人手机 :"
+                                       :rules="[{required: true,validator: validateMobile,message: '个人手机必填'}]"
+                                       placeholder="请输入个人手机"/>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-field v-model="userInfoForm.email" name="email" label="*电子邮箱 :"
+                                       :rules="[{required: true,validator: validateEmail,message: '电子邮箱必填'}]"
+                                       placeholder="请输入电子邮箱"/>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-field
+                                    :rules="[{required: true,message: '身份证人像面扫描件必填'}]"
+                                    label="*身份证人像面扫描件:"
+                                    name="sfzzmsmjhzzy"
+                            >
+                                <template #input>
+                                    <van-uploader
+                                            :after-read="(file)=>afterRead(file,'身份证人像面扫描件')"
+                                            :before-read="beforeRead"
+                                            :max-count="1"
+                                            accept=".png,.jpg,.pdf"
+                                            max-size="5242880"
+                                            v-model="userInfoForm.sfzzmsmjhzzy"
+                                    ></van-uploader>
+                                </template>
+                            </van-field>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-field
+                                    :rules="[{required: true,message: '身份证国微面扫描件必填'}]"
+                                    label="*身份证国微面扫描件:"
+                                    name="sfzfmsmj"
+                            >
+                                <template #input>
+                                    <van-uploader
+                                            :after-read="(file)=>afterRead(file,'身份证国微面扫描件')"
+                                            :before-read="beforeRead"
+                                            :max-count="1"
+                                            accept=".png,.jpg,.pdf"
+                                            max-size="5242880"
+                                            v-model="userInfoForm.sfzfmsmj"
+                                    ></van-uploader>
+                                </template>
+                            </van-field>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-field
+                                    :label="fieldLabel"
+                                    :rules="fieldRules"
+                                    name="lzzmsmj"
+                            >
+                                <template #input>
+                                    <van-uploader
+                                            :after-read="(file)=>afterRead(file,'离职证明扫描件')"
+                                            :before-read="beforeRead"
+                                            :max-count="1"
+                                            accept=".png,.jpg,.pdf"
+                                            max-size="5242880"
+                                            v-model="userInfoForm.lzzmsmj"
+                                    ></van-uploader>
+                                </template>
+                            </van-field>
+                        </van-cell-group>
+                    </van-collapse-item>
+                    <van-collapse-item title=" 银行信息" name="2">
+                        <van-cell-group inset>
+                            <van-field name="otherBank" label="是否它行">
+                                <template #input>
+                                    <van-switch @change="isOtherBank" size="18px"
+                                                v-model="userInfoForm.otherBank"/>
+                                </template>
+                            </van-field>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-tag class="ml" type="warning">!员工没有当前公司指定银行卡时需要勾选</van-tag>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-field readonly :disabled=" !userInfoForm.otherBank"
+                                       v-model="userInfoForm.bankTypeText" name="bankType" label="银行类别 :" is-link
+                                       placeholder="请选择银行类别" @click=" showPickerBankTypeChange"
+                                       :rules="[{required: true,message: '请选择银行类别'}]"/>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-field v-model="userInfoForm.provinceTypeText" name="provinceType" label="*省市 :"
+                                       placeholder="请选择省市" is-link readonly
+                                       @click="userInfoForm.showPickerProvinceType= true"
+                                       :rules="[{required: true,message: '请选择省市'}]"/>
+                        </van-cell-group>
+
+                        <van-cell-group inset>
+                            <van-field v-model="userInfoForm.bankNameText" name="bankName" label="*开户行 :"
+                                       @update:model-value="chooseKhh" :rules="[{required: true,message: '开户行必填'}]"
+                                       placeholder="请输入开户行"/>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-tag class="ml" type="warning">!此项为员工发放薪资银行卡号，请务必填写</van-tag>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-field v-model="userInfoForm.bankCard" name="bankCard" label="*银行卡号 :"
+                                       @blur="bankCardWaring"
+                                       :rules="[{required: true,validator: validateBankCard,message: '银行卡号必填'}]"
+                                       placeholder="请输入银行卡号必填"/>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-tag class="ml" type="warning">!该银行信息与您领取工资及报销款相关，烦请您再输入一次
+                            </van-tag>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-field v-model="userInfoForm.bankCardConfirm" name="bankCardConfirm" label="*卡号确认 :"
+                                       :rules="[{required: true,validator: bankCardConfirmEvt,message: '银行卡确认必填'}]"
+                                       placeholder="请输入银行卡确认"/>
+                        </van-cell-group>
+                    </van-collapse-item>
+                    <van-collapse-item title="*学习经历(必填)" name="3">
+                        <van-cell-group inset>
+                            <van-tag type="warning">! 请从最高学历从上至下填写到高中即可</van-tag>
+                        </van-cell-group>
+                        <van-cell-group inset>
+                            <van-button type="primary" size="mini"
+                                        @click=" userInfoForm.showLearningexperice = true">添加学习经历
+                            </van-button>
+                            <van-button class="ml" type="primary" size="mini"
+                                        @click="deleteAllLearnng">删除所有学习经历
+                            </van-button>
+                            <van-row justify="center" class="mt">
+
+                                <van-col span="6">开始日期</van-col>
+                                <van-col span="6">结束日期</van-col>
+                                <van-col span="6">教育类型</van-col>
+
+                                <van-col span="6">
+
+
+                                </van-col>
+                            </van-row>
+
+                            <van-row justify="center" class="mt" v-for="(item,index) in userInfoForm.studyData"
+                                     :key="index">
+                                <van-col span="6">{{item.startDate}}</van-col>
+                                <van-col span="6">{{item.endDate}}</van-col>
+                                <van-col span="6">{{item.typeText}}</van-col>
+                                <van-col span="3"><a href="#" @click="lookDetail(index)">详情</a></van-col>
+                                <van-col span="3"><a href="#" @click="deleteLearningE(index)">删除</a></van-col>
+                            </van-row>
+
+
+                            <van-row justify="center" class="mt" v-show="userInfoForm.studyData.length == 0">
+                                暂无数据
+                            </van-row>
+                        </van-cell-group>
+                    </van-collapse-item>
+                    <van-collapse-item title="*工作经历(必填)" name="4">
+
+                        <van-cell-group inset>
+
+                            <p class="firtJoin">
+                                <van-cell-group inset>
+                                    <van-field v-model="userInfoForm.firstWork" is-link readonly
+                                               label="*首次参加工作时间 :"
+                                               placeholder="请选择首次参加工作时间"
+                                               @click="userInfoForm.showPickerFirstWork= true"
+                                               :rules="[{required: true,message: '首次参加工作时间必填'}]"/>
+                                </van-cell-group>
+                            </p>
+                            <van-button type="primary" size="mini" @click=" userInfoForm.showGzexperice = true">添加工作经历
+                            </van-button>
+                            <van-button class="ml" type="primary" size="mini"
+                                        @click="deleteAllGzLearnng">删除所有工作经历
+                            </van-button>
+                            <van-row justify="center" class="mt">
+
+                                <van-col span="6">开始日期</van-col>
+                                <van-col span="6">结束日期</van-col>
+                                <van-col span="6">单位</van-col>
+
+                                <van-col span="6">
+
+
+                                </van-col>
+                            </van-row>
+
+                            <van-row justify="center" class="mt" v-for="(item,index) in userInfoForm.workData"
+                                     :key="index">
+                                <van-col span="6">{{item.startDate}}</van-col>
+                                <van-col span="6">{{item.endDate}}</van-col>
+                                <van-col span="6">{{item.company}}</van-col>
+                                <van-col span="3"><a href="#" @click="lookWorkDetail(index)">详情</a></van-col>
+                                <van-col span="3"><a href="#" @click="deleteWorkE(index)">删除</a></van-col>
+                            </van-row>
+
+
+                            <van-row justify="center" class="mt" v-show="userInfoForm.workData.length == 0">
+                                暂无数据
+                            </van-row>
+                        </van-cell-group>
+                    </van-collapse-item>
+                    <van-collapse-item title="*家庭成员(必填)" name="5">
+
+                        <van-cell-group inset>
+                            <van-button type="primary" size="mini"
+                                        @click=" userInfoForm.showPickerFamily = true">添加家庭成员
+                            </van-button>
+                            <van-button class="ml" type="primary" size="mini"
+                                        @click="deleteAll('familyData')">删除所有家庭成员
+                            </van-button>
+                            <van-row justify="center" class="mt">
+
+                                <van-col span="6">姓名</van-col>
+                                <van-col span="4">关系</van-col>
+                                <van-col span="6">联系电话</van-col>
+
+                                <van-col span="6">
+
+
+                                </van-col>
+                            </van-row>
+
+                            <van-row justify="center" class="mt" v-for="(item,index) in userInfoForm.familyData"
+                                     :key="index">
+                                <van-col span="6">{{item.name}}</van-col>
+                                <van-col span="4">{{item.relText}}</van-col>
+                                <van-col span="6">{{item.tel}}</van-col>
+                                <van-col class="ml" span="3"><a href="#"
+                                                                @click="lookOneDetail(index,'familyData','detailFamilyDataObj','showPickerDetailFamily')">详情</a>
+                                </van-col>
+                                <van-col span="3"><a href="#"
+                                                     @click="deleteOneE(index,'familyData')">删除</a></van-col>
+                            </van-row>
+
+
+                            <van-row justify="center" class="mt" v-show="userInfoForm.familyData.length == 0">
+                                暂无数据
+                            </van-row>
+                        </van-cell-group>
+                    </van-collapse-item>
+                    <van-collapse-item title="资质证书（*如有请务必填写）" name="6">
+
+                        <van-cell-group inset>
+                            <van-button type="primary" size="mini"
+                                        @click=" userInfoForm.showPickerZhizhi = true">添加资质证书
+                            </van-button>
+                            <van-button class="ml" type="primary" size="mini"
+                                        @click="deleteAll('certData')">删除所有资质证书
+                            </van-button>
+                            <van-row class="mt">
+
+                                <van-col span="6">获证日期</van-col>
+
+                                <van-col span="7">证书名称</van-col>
+
+                                <van-col span="6">
+                                </van-col>
+                            </van-row>
+
+                            <van-row class="mt" v-for="(item,index) in userInfoForm.certData" :key="index">
+                                <van-col span="6">{{item.startTime}}</van-col>
+
+                                <van-col span="7">{{item.certNameText}}</van-col>
+                                <van-col class="ml" span="3"><a href="#"
+                                                                @click="lookOneDetail(index,'certData','detailCertDataObj','showPickerDetailCert')">详情</a>
+                                </van-col>
+                                <van-col span="3"><a href="#" @click="deleteOneE(index,'certData')">删除</a></van-col>
+                            </van-row>
+
+
+                            <van-row class="mt" v-show="userInfoForm.certData.length == 0">
+                                暂无数据
+                            </van-row>
+                        </van-cell-group>
+                    </van-collapse-item>
+                </van-collapse>
+            </van-col>
+
+        </van-row>
+
+        <div style=" margin-top: 20px;">
+            <van-row justify="center">
+                <van-col span="3">
+                    <van-button size="small" type="primary" native-type="submit" :loading="submitLoading">
+                        提交
+                    </van-button>
+                </van-col>
+                <van-col span="5">
+                    <van-button size="small" type="primary" @click="savaInfo">
+                        保存为草稿
+                    </van-button>
+                </van-col>
+                <van-col span="3" class="ml">
+                    <van-button size="small" type="primary" @click="reset">
+                        重置
+                    </van-button>
+                </van-col>
+            </van-row>
+
+        </div>
+    </van-form>
+
+    <van-toast v-model:show="userInfoForm.showPickerDetailLearning" style="padding: 20px" :duration="5000">
+        <template #message>
+            <p><span>开始日期 :</span> <span>{{userInfoForm.detailLearningObj.startDate}}</span></p>
+            <p><span>结束日期 :</span> <span>{{userInfoForm.detailLearningObj.endDate}}</span></p>
+            <p><span>教育类型 :</span> <span>{{userInfoForm.detailLearningObj.typeText}}</span></p>
+            <p><span>学历证书 :</span> <span>{{userInfoForm.detailLearningObj.educationText}}</span></p>
+            <p><span>学位 :</span> <span>{{userInfoForm.detailLearningObj.degree2Text}}</span></p>
+            <p><span>机构/学校 :</span> <span>{{userInfoForm.detailLearningObj.schoolName}}</span></p>
+            <p><span>专业 :</span> <span>{{userInfoForm.detailLearningObj.profession}}</span></p>
+        </template>
+    </van-toast>
+
+    <van-toast v-model:show="userInfoForm.showPickerDetailWork" style="padding: 20px" :duration="5000">
+        <template #message>
+            <p><span>开始日期 :</span> <span>{{userInfoForm.detailWorkObj.startDate}}</span></p>
+            <p><span>结束日期 :</span> <span>{{userInfoForm.detailWorkObj.endDate}}</span></p>
+            <p><span>单位 :</span> <span>{{userInfoForm.detailWorkObj.company}}</span></p>
+            <p><span>职务 :</span> <span>{{userInfoForm.detailWorkObj.rank}}</span></p>
+            <p><span>联系人姓名及电话:</span> <span>{{userInfoForm.detailWorkObj.tel}}</span></p>
+
+        </template>
+    </van-toast>
+    <van-toast v-model:show="userInfoForm.showPickerDetailFamily" style="padding: 20px" :duration="5000">
+        <template #message>
+            <p><span>姓名 :</span> <span>{{userInfoForm.detailFamilyDataObj.name}}</span></p>
+            <p><span>关系 :</span> <span>{{userInfoForm.detailFamilyDataObj.relText}}</span></p>
+            <p><span>所在单位 :</span> <span>{{userInfoForm.detailFamilyDataObj.company}}</span></p>
+            <p><span>联系电话:</span> <span>{{userInfoForm.detailFamilyDataObj.tel}}</span></p>
+
+        </template>
+    </van-toast>
+    <van-toast v-model:show="userInfoForm.showPickerDetailCert" style="padding: 20px" :duration="5000">
+        <template #message>
+            <p><span>获证日期 :</span> <span>{{userInfoForm.detailCertDataObj.startTime}}</span></p>
+            <p><span>失效日期 :</span> <span>{{userInfoForm.detailCertDataObj.endTime}}</span></p>
+            <p><span>证书类别 :</span> <span>{{userInfoForm.detailCertDataObj.certTypeText}}</span></p>
+            <p><span>证书名字:</span> <span>{{userInfoForm.detailCertDataObj.certNameText}}</span></p>
+            <p><span>备注项:</span> <span>{{userInfoForm.detailCertDataObj.bzx}}</span></p>
+        </template>
+    </van-toast>
+    <van-dialog v-model:show="userInfoForm.showLearningexperice" title="添加学习经历" :show-cancel-button="false"
+                @open="initializeStudyFormObj" :show-confirm-button=false><!--studyFormObj={}-->
+        <van-form @submit="onSubmitAddLearning">
+            <van-cell-group inset>
+                <van-field v-model="studyFormObj.startDate" is-link readonly label="*开始日期 :"
+                           placeholder="请选择开始日期"
+                           @click="userInfoForm.showPickerStudyFormObj= true"
+                           :rules="[{required: true,message: '开始日期必填'}]"/>
+            </van-cell-group>
+
+            <van-cell-group inset>
+                <van-field v-model="studyFormObj.endDate" is-link readonly label="*结束日期 :"
+                           placeholder="请选择结束日期"
+                           @click="userInfoForm.showPickerStudyFormObjEndDate= true"
+                           :rules="[{required: true,message: '结束日期必填'}]"/>
+            </van-cell-group>
+            <van-cell-group inset>
+                <van-field v-model="studyFormObj.typeText" label="*教育类型 :" is-link readonly
+                           placeholder="请选择教育类型"
+                           @click="userInfoForm.showPickerJylxType= true"
+                           :rules="[{required: true,message: '请选择教育类型'}]"/>
+            </van-cell-group>
+            <van-cell-group inset>
+                <van-field v-model="studyFormObj.educationText" label="*学历证书 :" is-link readonly
+                           :placeholder="!studyFormObj.type?'请先选择教育类型':'请选择学历证书'"
+                           @click="userInfoForm.showPickerEducation= true"
+                           :disabled="!studyFormObj.type"
+                           :rules="[{required: true,message: '请选择学历证书'}]"/>
+            </van-cell-group>
+            <van-cell-group inset>
+                <van-field v-model="studyFormObj.degree2Text" label="*学位 :" is-link readonly
+                           :placeholder="!studyFormObj.type?'请先选择教育类型':'请选择学位'"
+                           @click="userInfoForm.showPickerDegree2= true"
+                           :disabled="!studyFormObj.type"
+                           :rules="[{required: true,message: '请选择学位'}]"/>
+            </van-cell-group>
+            <van-cell-group inset>
+                <van-field v-model="studyFormObj.schoolName" label="*机构/学校 :"
+                           :rules="[{required: true,message: '机构/学校必填'}]" placeholder="请输入机构/学校"/>
+            </van-cell-group>
+            <van-cell-group inset>
+                <van-field v-model="studyFormObj.profession" label="*学习内容(专业) :"
+                           :rules="[{required: true,message: '学习内容(专业)必填'}]"
+                           placeholder="请输入学习内容(专业)"/>
+            </van-cell-group>
+            <div style="margin: 16px;" class="addLearningClass">
+
+                <van-button type="primary" size="mini" native-type="submit">确定</van-button>
+                <van-button type="primary" size="mini" class="ml" @click="cancelAddLearning">取消</van-button>
+            </div>
+        </van-form>
+    </van-dialog>
+    <van-dialog v-model:show="userInfoForm.showGzexperice" title="添加工作经历" :show-cancel-button="false"
+                @open="workFormObj={}" :show-confirm-button=false>
+        <van-form @submit="submitAdd('workData','showGzexperice','workFormObj')">
+            <van-cell-group inset>
+                <van-field v-model="workFormObj.startDate" is-link readonly label="*开始日期 :"
+                           placeholder="请选择开始日期"
+                           @click="userInfoForm.showPickerWorkFormObjStartDate= true"
+                           :rules="[{required: true,message: '开始日期必填'}]"/>
+            </van-cell-group>
+
+            <van-cell-group inset>
+                <van-field v-model="workFormObj.endDate" is-link readonly label="*结束日期 :"
+                           placeholder="请选择结束日期"
+                           @click="userInfoForm.showPickerWorkFormObjEndDate= true"
+                           :rules="[{required: true,message: '结束日期必填'}]"/>
+            </van-cell-group>
+
+
+            <van-cell-group inset>
+                <van-field v-model="workFormObj.company" label="*单位 :" :rules="[{required: true,message: '单位'}]"
+                           placeholder="请输入单位"/>
+            </van-cell-group>
+
+            <van-cell-group inset>
+                <van-field v-model="workFormObj.rank" label="*职务 :" :rules="[{required: true,message: '职务必填'}]"
+                           placeholder="请输入职务"/>
+            </van-cell-group>
+            <van-cell-group inset>
+                <van-field v-model="workFormObj.tel" label="*联系人姓名及电话 :"
+                           :rules="[{required: true,message: '联系人姓名及电话必填'}]"
+                           placeholder="请输入联系人姓名及电话"/>
+            </van-cell-group>
+            <div style="margin: 16px;" class="addLearningClass">
+
+                <van-button type="primary" size="mini" native-type="submit">确定</van-button>
+                <van-button type="primary" size="mini" class="ml"
+                            @click="userInfoForm.showGzexperice = false">取消
+                </van-button>
+            </div>
+        </van-form>
+    </van-dialog>
+    <van-dialog v-model:show="userInfoForm.showPickerFamily" title="添加家庭成员" :show-cancel-button="false"
+                @open="familyFormObj={}" :show-confirm-button=false>
+        <van-form @submit="submitAdd('familyData','showPickerFamily','familyFormObj')">
+            <van-cell-group inset>
+                <van-field v-model="familyFormObj.name" label="*人员姓名 :"
+                           :rules="[{required: true,message: '人员姓名必填'}]" placeholder="请输入人员姓名"/>
+            </van-cell-group>
+            <van-cell-group inset>
+                <van-field v-model="familyFormObj.relText" label="*关系 :" is-link readonly placeholder="请选择关系"
+                           @click="userInfoForm.showPickerFamilyRel= true"
+                           :rules="[{required: true,message: '请选择家庭成员关系'}]"/>
+            </van-cell-group>
+            <van-cell-group inset>
+                <van-field v-model="familyFormObj.company" label="所在单位 :" placeholder="请输入所在单位"/>
+            </van-cell-group>
+            <van-cell-group inset>
+                <van-field v-model="familyFormObj.tel" label="*联系电话 :"
+                           :rules="[{required: true,message: '联系电话必填'}]"
+                           placeholder="请输入联系电话"/>
+            </van-cell-group>
+            <div style="margin: 16px;" class="addLearningClass">
+
+                <van-button type="primary" size="mini" native-type="submit">确定</van-button>
+                <van-button type="primary" size="mini" class="ml"
+                            @click="userInfoForm.showPickerFamily = false">取消
+                </van-button>
+            </div>
+        </van-form>
+    </van-dialog>
+    <van-dialog v-model:show="userInfoForm.showPickerZhizhi" title="添加资质证书" :show-cancel-button="false"
+                :show-confirm-button=false @open="ziZhiFormObj={bzx:'',scfj:[],scfjId:null}">
+        <van-form @submit="submitAdd('certData','showPickerZhizhi','ziZhiFormObj')">
+            <van-cell-group inset>
+                <van-field v-model="ziZhiFormObj.startTime" is-link readonly label="*获证日期:"
+                           placeholder="请选择证书获证日期"
+                           @click="userInfoForm.showPickerziZhiFormObjStartDate= true"
+                           :rules="[{required: true,message: '获证日期必填'}]"/>
+            </van-cell-group>
+            <van-cell-group inset>
+                <van-field v-model="ziZhiFormObj.endTime" is-link readonly label="失效日期:"
+                           placeholder="请选择证书失效日期"
+                           @click="userInfoForm.showPickerziZhiFormObjEndDate= true"
+                           :rules="[{required: true,message: '证书失效日期必填'}]"/>
+            </van-cell-group>
+            <van-cell-group inset>
+                <van-field v-model="ziZhiFormObj.certTypeText" label="*证书分类 :" is-link readonly
+                           placeholder="请选择证书分类" @click="userInfoForm.showPickernCertType = true"
+                           :rules="[{required: true,message: '请选择证书分类'}]"/>
+            </van-cell-group>
+            <van-cell-group inset>
+                <van-field :rules="[{required: true,message: '请选择证书名称'}]"
+                           @click="userInfoForm.showPickernCertName = true" is-link label="*证书名称 :"
+                           placeholder="请选择证书名称" readonly
+                           v-model="ziZhiFormObj.certNameText"/>
+            </van-cell-group>
+            <van-cell-group inset>
+                <van-field
+                        label="*上传附件 :"
+                        name="scfj"
+                        :rules="[{required: true,message: '请上传附件'}]"
+                >
+                    <template #input>
+                        <van-uploader
+                                accept=".png,.jpg,.pdf"
+                                max-size="5242880"
+                                style="align-items: center"
+                                :after-read="(file)=>afterRead(file,'上传附件')"
+                                :before-read="beforeRead"
+                                :max-count="1"
+                                v-show="!ziZhiFormObj.scfj.length"
+                                v-model="ziZhiFormObj.scfj">
+                            <van-button icon="plus" size="mini" type="primary">点击上传</van-button>
+                        </van-uploader>
+                        <div style="display: flex;justify-content: space-between;width: 100%;"
+                             v-show="ziZhiFormObj.scfj.length">
+                            <div style="color: #1989fa;width: 100px; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                                {{ziZhiFormObj.scfj[0]?.file.name}}
+                            </div>
+                            <div @click="ziZhiFormObj.scfj.pop()" style="color: #ee0a24; font-size: 12px"
+                                 v-show="ziZhiFormObj.scfj[0]?.status === 'done'">删除
+                            </div>
+                            <van-loading color="#1989fa" size="20"
+                                         v-show="ziZhiFormObj.scfj[0]?.status === 'uploading'"/>
+                        </div>
+                    </template>
+                </van-field>
+            </van-cell-group>
+            <van-cell-group inset>
+                <van-field type="textarea" v-model="ziZhiFormObj.bzx" label="备注项 :" placeholder="请输入备注项"/>
+            </van-cell-group>
+            <div style="margin: 16px;" class="addLearningClass">
+
+                <van-button type="primary" size="mini" native-type="submit">确定</van-button>
+                <van-button type="primary" size="mini" class="ml"
+                            @click="userInfoForm.showPickerZhizhi = false">取消
+                </van-button>
+            </div>
+        </van-form>
+    </van-dialog>
+    <van-popup v-model:show="userInfoForm.showPickerziZhiFormObjStartDate" position="bottom" safe-area-inset-bottom>
+        <van-date-picker :min-date="minDate" :max-date="maxDate"
+                         @confirm="(e)=>onTimeConfirmOut('ziZhiFormObj','startTime',e,'showPickerziZhiFormObjStartDate')"
+                         @cancel="userInfoForm.showPickerziZhiFormObjStartDate = false"/>
+    </van-popup>
+    <van-popup v-model:show="userInfoForm.showPickerziZhiFormObjEndDate" position="bottom" safe-area-inset-bottom>
+        <van-date-picker :min-date="minDate" :max-date="maxDate"
+                         @confirm="(e)=>onTimeConfirmOut('ziZhiFormObj','endTime',e,'showPickerziZhiFormObjEndDate')"
+                         @cancel="userInfoForm.showPickerziZhiFormObjEndDate = false"/>
+    </van-popup>
+    <van-popup v-model:show="userInfoForm.showPickerFirstWork" position="bottom" safe-area-inset-bottom>
+        <van-date-picker :min-date="minDate" :max-date="maxDate"
+                         @confirm="(e)=>onTimeConfirm('firstWork',e,'showPickerFirstWork')"
+                         @cancel="userInfoForm.showPickerFirstWork = false"/>
+    </van-popup>
+    <van-popup v-model:show="userInfoForm.showPickerDegree2" position="bottom" safe-area-inset-bottom>
+        <van-picker :columns="educationAndDegree2s.get(studyFormObj.type)[1]" @confirm="onDegree2Confirm"
+                    @cancel="userInfoForm.showPickerDegree2 = false"/>
+    </van-popup>
+    <van-popup v-model:show="userInfoForm.showPickerJylxType" position="bottom" safe-area-inset-bottom>
+        <van-picker :columns="jylxTypes" @confirm="onJylxTypeConfirm"
+                    @cancel="userInfoForm.showPickerJylxType = false"/>
+    </van-popup>
+    <van-popup v-model:show="userInfoForm.showPickerFamilyRel" position="bottom" safe-area-inset-bottom>
+        <van-picker :columns="familyRels"
+                    @confirm="(e)=>onOptionConfirm(e,'familyFormObj','relText','rel','showPickerFamilyRel')"
+                    @cancel="userInfoForm.showPickerFamilyRel = false"/>
+    </van-popup>
+
+    <van-popup v-model:show="userInfoForm.showPickernCertType" position="bottom" safe-area-inset-bottom>
+        <van-picker :columns="certTypes"
+                    @confirm="(e)=>onOptionConfirm(e,'ziZhiFormObj','certTypeText','certType','showPickernCertType')"
+                    @cancel="userInfoForm.showPickernCertType = false"/>
+    </van-popup>
+    <van-popup v-model:show="userInfoForm.showPickernCertName" position="bottom" safe-area-inset-bottom>
+        <van-picker :columns="certNames"
+                    @confirm="(e)=>onOptionConfirm(e,'ziZhiFormObj','certNameText','certName','showPickernCertName')"
+                    @cancel="userInfoForm.showPickernCertName = false"/>
+    </van-popup>
+
+    <van-popup v-model:show="userInfoForm.showPickerEducation" position="bottom" safe-area-inset-bottom>
+        <van-picker :columns="educationAndDegree2s.get(studyFormObj.type)[0]" @confirm="onEducationConfirm"
+                    @cancel="userInfoForm.showPickerEducation = false"/>
+    </van-popup>
+    <van-popup v-model:show="userInfoForm.showPickerStudyFormObj" position="bottom" safe-area-inset-bottom>
+        <van-date-picker :min-date="minDate" :max-date="maxDate" @confirm="onStudyFormObjConfirm"
+                         @cancel="userInfoForm.showPickerStudyFormObj = false"/>
+    </van-popup>
+    <van-popup v-model:show="userInfoForm.showPickerWorkFormObjStartDate" position="bottom" safe-area-inset-bottom>
+        <van-date-picker @confirm="onWorkFormObjStartDateConfirm" :min-date="minDate" :max-date="maxDate"
+                         @cancel="userInfoForm.showPickerWorkFormObjStartDate = false"/>
+    </van-popup>
+    <van-popup v-model:show="userInfoForm.showPickerStudyFormObjEndDate" position="bottom" safe-area-inset-bottom>
+        <van-date-picker @confirm="onStudyFormObjEndDateConfirm" :min-date="minDate" :max-date="maxDate"
+                         @cancel="userInfoForm.showPickerStudyFormObjEndDate = false"/>
+    </van-popup>
+    <van-popup v-model:show="userInfoForm.showPickerWorkFormObjEndDate" position="bottom" safe-area-inset-bottom>
+        <van-date-picker @confirm="onWorkFormObjEndDateConfirm" :min-date="minDate" :max-date="maxDate"
+                         @cancel="userInfoForm.showPickerWorkFormObjEndDate = false"/>
+    </van-popup>
+    <van-popup v-model:show="userInfoForm.showPickerCompany" position="bottom" safe-area-inset-bottom>
+        <van-picker :columns="companys" @confirm="onCompanyConfirm" :min-date="minDate" :max-date="maxDate"
+                    @cancel="userInfoForm.showPickerCompany = false"/>
+    </van-popup>
+    <van-popup v-model:show="userInfoForm.showPickerCountry" position="bottom" safe-area-inset-bottom>
+        <van-picker :columns="countrys" @confirm="onCountryConfirm"
+                    @cancel="userInfoForm.showPickerCountry = false"/>
+    </van-popup>
+    <van-popup v-model:show="userInfoForm.showPickerNation" position="bottom" safe-area-inset-bottom>
+        <van-picker :columns="nations" @confirm="onNationConfirm" @cancel="userInfoForm.showPickerNation = false"/>
+    </van-popup>
+    <van-popup v-model:show="userInfoForm.showPickeridType" position="bottom" safe-area-inset-bottom>
+        <van-picker :columns="userInfoForm.idTypes" @confirm="onidTypeConfirm"
+                    @cancel="userInfoForm.showPickeridType = false"></van-picker>
+    </van-popup>
+    <van-popup v-model:show="userInfoForm.showPickerBirthday" position="bottom" safe-area-inset-bottom>
+        <van-date-picker :min-date="minDate" :max-date="maxDate" @confirm="onBirthdayConfirm"
+                         @cancel="userInfoForm.showPickerBirthday = false"></van-date-picker>
+    </van-popup>
+    <van-popup v-model:show="userInfoForm.showPickeridNumberStartDate" position="bottom" safe-area-inset-bottom>
+        <van-date-picker :min-date="minDate" :max-date="maxDate" @confirm="onidNumberStartDateConfirm"
+                         @cancel="userInfoForm.showPickeridNumberStartDate = false"
+                         :required="userInfoForm.idNumberStartDateRequired"/>
+    </van-popup>
+    <van-popup v-model:show="userInfoForm.showPickeridNumberEndDate" position="bottom" safe-area-inset-bottom>
+        <van-date-picker :min-date="minDate" :max-date="maxDate" @confirm="onidNumberEndDateConfirm"
+                         @cancel="userInfoForm.showPickeridNumberEndDate = false"
+                         :required="userInfoForm.idNumberEndDateRequired"/>
+    </van-popup>
+    <van-popup v-model:show="userInfoForm.showPickerPolity" position="bottom" safe-area-inset-bottom>
+        <van-picker :columns="politys" @confirm="onidPolityConfirm"
+                    @cancel="userInfoForm.showPickerPolity = false"/>
+    </van-popup>
+    <van-popup v-model:show="userInfoForm.showPickerSelectedPlaces1" position="bottom" safe-area-inset-bottom>
+        <van-cascader title="请选择所在地区" :options="allPlaces1"
+                      @close="userInfoForm.showPickerSelectedPlaces1 = false"
+                      @finish="onSelectedPlaces1Confirm"/>
+    </van-popup>
+    <van-popup v-model:show="userInfoForm.showPickerSelectedPlaces2" position="bottom" safe-area-inset-bottom>
+        <van-cascader title="请选择所在地区" :options="allPlaces1"
+                      @close="userInfoForm.showPickerSelectedPlaces2 = false"
+                      @finish="onSelectedPlaces1Confirm2"/>
+    </van-popup>
+    <van-popup v-model:show="userInfoForm.showPickerSelectedPlaces3" position="bottom" safe-area-inset-bottom>
+        <van-cascader title="请选择所在地区" :options="allPlaces1"
+                      @close="userInfoForm.showPickerSelectedPlaces3 = false"
+                      @finish="onSelectedPlaces1Confirm3"/>
+    </van-popup>
+    <van-popup v-model:show="userInfoForm.showPickerAccountType" position="bottom" safe-area-inset-bottom>
+        <van-picker :columns="accountTypes" @confirm="onAccountTypeConfirm"
+                    @cancel="userInfoForm.showPickerAccountType = false"/>
+    </van-popup>
+    <van-popup v-model:show="userInfoForm.showPickerMarry" position="bottom" safe-area-inset-bottom>
+        <van-picker :columns="marrys" @confirm="onMarryConfirm" @cancel="userInfoForm.showPickerMarry = false"/>
+    </van-popup>
+    <van-popup v-model:show="userInfoForm.showPickerFertility" position="bottom" safe-area-inset-bottom>
+        <van-picker :columns="fertilityes" @confirm="onFertilityConfirm"
+                    @cancel="userInfoForm.showPickerFertility = false"/>
+    </van-popup>
+
+    <van-popup v-model:show="userInfoForm.showPickerOfferType" position="bottom" safe-area-inset-bottom>
+        <van-picker :columns="offerTypes" @confirm="onOfferTypeConfirm"
+                    @cancel="userInfoForm.showPickerOfferType = false"/>
+    </van-popup>
+
+    <van-popup v-model:show="userInfoForm.showPickerDegree" position="bottom" safe-area-inset-bottom>
+        <van-picker :columns="degrees" @confirm="onDegreeConfirm" @cancel="userInfoForm.showPickerDegree = false"/>
+    </van-popup>
+
+    <van-popup v-model:show="userInfoForm.showPickerEnLevel" position="bottom" safe-area-inset-bottom>
+        <van-picker :columns="enLevels" @confirm="onEnLevelConfirm"
+                    @cancel="userInfoForm.showPickerEnLevel = false"/>
+    </van-popup>
+
+    <van-popup v-model:show="userInfoForm.showPickerJpLevel" position="bottom" safe-area-inset-bottom>
+        <van-picker :columns="jpLevels" @confirm="onJpLevelConfirm"
+                    @cancel="userInfoForm.showPickerJpLevel = false"/>
+    </van-popup>
+    <van-popup v-model:show="userInfoForm.showPickerAddressType" position="bottom" safe-area-inset-bottom>
+        <van-picker :columns="addressTypes" @confirm="onAddressTypeConfirm"
+                    @cancel="userInfoForm.showPickerAddressType = false"/>
+    </van-popup>
+    <van-popup v-model:show="userInfoForm.showPickerBankType" position="bottom" safe-area-inset-bottom>
+        <van-picker :columns="bankTypes" @confirm="onBankTypeConfirm"
+                    @cancel="userInfoForm.showPickerBankType = false"/>
+    </van-popup>
+    <van-popup v-model:show="computedKhhPicker" position="bottom" safe-area-inset-bottom @close="closePickerKhh">
+        <van-picker :columns="khhs" @confirm="onKhhConfirm" @cancel="closePickerKhh"
+                    :loading="userInfoForm.pickerKhhLoading"/>
+    </van-popup>
+    <van-popup v-model:show="userInfoForm.showPickerProvinceType" position="bottom" safe-area-inset-bottom>
+        <van-cascader title="请选择所在地区" :options="allPlaces1" @close="userInfoForm.showPickerProvinceType = false"
+                      @finish="onProvinceTypeConfirm"/>
+    </van-popup>
+    <div style="position: fixed;width: 100vw;height: 100vh;top: 0;left: 0;background: rgba(0, 0, 0, 0.6);"
+         v-if="submitLoading">
+        <van-loading color="white" style="position: absolute; top: 50%;left: 50%; transform: translate(-50%,-50%);"/>
+    </div>
+</div>
+
+<script>
+    // js部分
+    const {onMounted, createApp, reactive, toRefs, ref, onBeforeMount, setup, computed, nextTick} = Vue;
+    const {showToast, showFailToast, showSuccessToast, showConfirmDialog, showDialog} = vant;
+    const app = createApp({
+
+        setup() {
+            const educations = [
+                {
+                    text: "本科",
+                    value: "01"
+                }, {
+                    text: "硕士研究生",
+                    value: "02"
+                }, {
+                    text: "博士研究生",
+                    value: "03"
+                }, {
+                    text: "大专",
+                    value: "04"
+                }, {
+                    text: "本科结业证书",
+                    value: "21"
+                }, {
+                    text: "硕士研究生结业证书",
+                    value: "22"
+                }
+            ]
+            const degrees = [
+                {
+                    text: "学士学位",
+                    value: "01"
+                }, {
+                    text: "硕士学位",
+                    value: "02"
+                }, {
+                    text: "博士学位",
+                    value: "03"
+                }, {
+                    text: "双学位",
+                    value: "04"
+                }, {
+                    text: "无学位",
+                    value: "09"
+                }
+            ]
+            const state = reactive({
+                companySearchText: '', // 搜索文本
+                filteredCompanys: [], // 过滤后的公司列表
+                show: true,
+                isAgree: false,
+                minDate: new Date(1949, 1, 1),
+                maxDate: new Date(2100, 1, 1),
+                userInfoForm: {
+                    otherBank: false,
+                    nationText: " ",
+                    deleteAll: 1,
+                    showPickerCompany: false,
+                    showPickerCountry: false,
+                    showPickerNation: false,
+                    showPickeridType: false,
+                    showPickeridNumberStartDate: false,
+                    showPickeridNumberEndDate: false,
+                    showPickerBirthday: false,
+                    showPickerPolity: false,
+                    showPickerSelectedPlaces1: false,
+                    showPickerSelectedPlaces2: false,
+                    showPickerSelectedPlaces3: false,
+                    showPickerAccountType: false,
+                    showPickerMarry: false,
+                    showPickerFertility: false,
+                    showPickerOfferType: false,
+                    showPickerDegree: false,
+                    showNation: false,
+                    showIdType: false,
+                    showIdNumberStartDate: false,
+                    showIdNumberEndDate: false,
+                    showHukou: false,
+                    showLizhiYuan: false,
+                    showPickerEnLevel: false,
+                    showPickerJpLevel: false,
+                    showPickerAddressType: false,
+                    showPickerBankType: false,
+                    showPickerProvinceType: false,
+                    showPickerKhh: false,
+                    pickerKhhLoading: false,
+                    showLearningexperice: false,
+                    showPickerStudyFormObj: false,
+                    showPickerStudyFormObjEndDate: false,
+                    showPickerJylxType: false,
+                    showPickerEducation: false,
+                    showPickerDegree2: false,
+                    showPickerDetailLearning: false,
+                    showPickerDetailWork: false,
+                    showPickerDetailFamily: false,
+                    showPickerDetailCert: false,
+                    showGzexperice: false,
+                    showPickerWorkFormObjStartDate: false,
+                    showPickerWorkFormObjEndDate: false,
+                    showPickerFirstWork: false,
+                    showPickerFamily: false,
+                    showPickerFamilyRel: false,
+                    showPickerZhizhi: false,
+                    showPickerziZhiFormObjStartDate: false,
+                    showPickerziZhiFormObjEndDate: false,
+                    showPickernCertType: false,
+                    showPickernCertName: false,
+                    detailLearningObj: {},
+                    detailFamilyDataObj: {}, //个人信息对象
+                    detailCertDataObj: {},
+                    detailWorkObj: {},
+                    idTypes: [],
+                    studyData: [],
+                    workData: [],
+                    familyData: [],
+                    certData: [],
+                    bankType2: '',
+                    bankTypeText2: '',
+                    sfzzmsmjhzzy: [], //身份证正面扫描件
+                    sfzzmsmjhzzyId: null, //身份证正面扫描件id
+                    sfzfmsmj: [], //身份证背面扫描件
+                    sfzfmsmjId: null, //身份证背面扫描件id
+                    diploma: [], //学位证书
+                    academicCertificate: [], //学历证书
+                    lzzmsmj: [], //离职证明
+                    lzzmsmjId: null, //离职证明扫描件id
+                    sfylzzm: null, //是否有离职证明
+                    sfylzzmid: null, //是否有离职证明
+                },
+                studyFormObj: {
+                    startDate: '',
+                    endDate: '',
+                    type: '',
+                    education: '',
+                    degree2: '',
+                    schoolName: '',
+                    profession: ''
+
+                }, //学习经历对象
+                workFormObj: {},//工作经历对象
+                ziZhiFormObj: {
+                    bzx: '',
+                    scfj: [], //资质证明附件上传
+                    scfjId: null, // 资质证明附件上传id
+                },
+                familyFormObj: {},
+                companys: [],
+                countrys: [],
+                nations: [],
+                allPlaces1: [],
+                khhs: [],
+                certTypes: [],
+                certNames: [],
+                familyRels: [{
+                    text: "配偶",
+                    value: "0"
+                }, {
+                    text: "父亲",
+                    value: "1"
+                }, {
+                    text: "母亲",
+                    value: "2"
+                }, {
+                    text: "子女",
+                    value: "3"
+                }, {
+                    text: "兄弟姐妹",
+                    value: "4"
+                }, {
+                    text: "其他亲属关系",
+                    value: "5"
+                }],
+
+                jylxTypes: [
+                    {
+                        text: "高中",
+                        value: "0"
+                    }, {
+                        text: "普通高等教育",
+                        value: "1"
+                    }, {
+                        text: "语言学校",
+                        value: "2"
+                    }, {
+                        text: "高等教育自学考试",
+                        value: "3"
+                    }, {
+                        text: "海外教育",
+                        value: "4"
+                    }, {
+                        text: "教育学院",
+                        value: "5"
+                    }, {
+                        text: "函授大学(学院)",
+                        value: "6"
+                    }, {
+                        text: "夜大学",
+                        value: "7"
+                    }, {
+                        text: "职高",
+                        value: "8"
+                    }, {
+                        text: "中等职业学院",
+                        value: "9"
+                    }, {
+                        text: "技术学校",
+                        value: "10"
+                    }, {
+                        text: "职工大学(学院或专科)",
+                        value: "11"
+                    }, {
+                        text: "成人高等教育",
+                        value: "21"
+                    }, {
+                        text: "其他",
+                        value: "22"
+                    }
+                ],
+                educationAndDegree2s: new Map([
+                    ['0', [
+                        [{
+                            text: "高中",
+                            value: "06"
+                        }, {
+                            text: "高中以下学历",
+                            value: "07"
+                        }, {
+                            text: "高中结业证书",
+                            value: "20"
+                        }],
+                        [
+                            {
+                                text: "无学位",
+                                value: "09"
+                            }
+                        ]
+                    ]],
+                    ['1', [
+                        educations,
+                        degrees
+                    ]],
+                    ['2', [
+                        educations,
+                        degrees
+                    ]],
+                    ['3', [
+                        educations,
+                        degrees
+                    ]],
+                    ['4', [
+                        educations,
+                        degrees
+                    ]],
+                    ['5', [
+                        educations,
+                        degrees
+                    ]],
+                    ['6', [
+                        educations,
+                        degrees
+                    ]],
+                    ['7', [
+                        educations,
+                        degrees
+                    ]],
+                    ['8', [
+                        [
+                            {
+                                text: "中专",
+                                value: "05"
+                            }
+                        ],
+                        [
+                            {
+                                text: "无学位",
+                                value: "09"
+                            }
+                        ]
+                    ]],
+                    ['9', [
+                        [
+                            {
+                                text: "中专",
+                                value: "05"
+                            }
+                        ],
+                        [
+                            {
+                                text: "无学位",
+                                value: "09"
+                            }
+                        ]
+                    ]],
+                    ['10', [
+                        [
+                            {
+                                text: "中专",
+                                value: "05"
+                            }
+                        ],
+                        [
+                            {
+                                text: "无学位",
+                                value: "09"
+                            }
+                        ]
+                    ]],
+                    ['11', [
+                        educations,
+                        degrees
+                    ]],
+                    ['21', [
+                        educations,
+                        degrees
+                    ]],
+                    ['22', [
+                        educations,
+                        degrees
+                    ]],
+                ]),
+                educations: [{
+                    text: "本科",
+                    value: "01"
+                }, {
+                    text: "硕士研究生",
+                    value: "02"
+                }, {
+                    text: "博士研究生",
+                    value: "03"
+                }, {
+                    text: "大专",
+                    value: "04"
+                }, {
+                    text: "中专",
+                    value: "05"
+                }, {
+                    text: "高中",
+                    value: "06"
+                }, {
+                    text: "高中以下学历",
+                    value: "07"
+                }, {
+                    text: "高中结业证书",
+                    value: "20"
+                }, {
+                    text: "本科结业证书",
+                    value: "21"
+                }, {
+                    text: "硕士研究生结业证书",
+                    value: "22"
+                }],
+                degree2s: [{
+                    text: "学士学位",
+                    value: "01"
+                }, {
+                    text: "硕士学位",
+                    value: "02"
+                }, {
+                    text: "博士学位",
+                    value: "03"
+                }, {
+                    text: "双学位",
+                    value: "04"
+                }, {
+                    text: "无学位",
+                    value: "09"
+                }],
+                bankTypes: [
+                    {
+                        text: "建设银行",
+                        value: "0"
+                    },
+                    {
+                        text: "招商银行",
+                        value: "1"
+                    },
+                    {
+                        text: "中国银行",
+                        value: "2"
+                    },
+                    {
+                        text: "工商银行",
+                        value: "3"
+                    },
+                    {
+                        text: "交通银行",
+                        value: "4"
+                    },
+                    {
+                        text: "农业银行",
+                        value: "5"
+                    },
+                    {
+                        text: "中国邮政储蓄银行",
+                        value: "6"
+                    },
+                    {
+                        text: "民生银行",
+                        value: "7"
+                    },
+                    {
+                        text: "兴业银行",
+                        value: "8"
+                    },
+                    {
+                        text: "平安银行",
+                        value: "9"
+                    },
+                    {
+                        text: "中信银行",
+                        value: "10"
+                    }
+                ],
+                degrees: [
+                    {
+                        text: "高中以下学历",
+                        value: "07"
+                    },
+                    {
+                        text: "高中",
+                        value: "06"
+                    },
+                    {
+                        text: "中专",
+                        value: "05"
+                    },
+                    {
+                        text: "大专",
+                        value: "04"
+                    },
+                    {
+                        text: "本科",
+                        value: "01"
+                    },
+                    {
+                        text: "硕士研究生",
+                        value: "02"
+                    },
+                    {
+                        text: "博士研究生",
+                        value: "03"
+                    },
+                    {
+                        text: "本科结业证书",
+                        value: "21"
+                    },
+                    {
+                        text: "硕士研究生结业证书",
+                        value: "22"
+                    },
+                ],
+                offerTypes: [
+                    {
+                        text: "正式员工",
+                        value: "0"
+                    },
+                    {
+                        text: "实习人员",
+                        value: "1"
+                    },
+                    {
+                        text: "劳务人员",
+                        value: "2"
+                    },
+                    {
+                        text: "Freelancer",
+                        value: "3"
+                    }
+                ],
+                jpLevels: [
+                    {
+                        text: "一级",
+                        value: "0"
+                    },
+                    {
+                        text: "二级",
+                        value: "1"
+                    },
+                    {
+                        text: "三级",
+                        value: "2"
+                    }
+                ],
+                enLevels: [
+                    {
+                        text: "CET四级",
+                        value: "0"
+                    },
+                    {
+                        text: "CET六级",
+                        value: "1"
+                    },
+                    {
+                        text: "专业四级",
+                        value: "2"
+                    },
+                    {
+                        text: "专业八级",
+                        value: "3"
+                    }
+                ],
+                addressTypes: [
+                    {
+                        text: "现居地址",
+                        value: "0"
+                    },
+                    {
+                        text: "家庭地址",
+                        value: "1"
+                    }
+                ],
+                accountTypes: [
+                    {
+                        text: "城镇",
+                        value: "0"
+                    },
+                    {
+                        text: "农村",
+                        value: "1"
+                    }
+                ],
+                marrys: [
+                    {
+                        text: "未婚",
+                        value: "0"
+                    },
+                    {
+                        text: "已婚",
+                        value: "1"
+                    },
+                    {
+                        text: "离异",
+                        value: "2"
+                    }
+                ],
+                fertilityes: [
+                    {
+                        text: "未生育",
+                        value: "0"
+                    },
+                    {
+                        text: "已生育",
+                        value: "1"
+                    },
+
+                ],
+                politys: [
+                    {
+                        text: "共产党员",
+                        value: "0"
+                    },
+                    {
+                        text: "团员",
+                        value: "1"
+                    },
+                    {
+                        text: "群众",
+                        value: "2"
+                    },
+                    {
+                        text: "其他",
+                        value: "3"
+                    },
+                ],
+                activeNames: ["0", "1", "2"]
+            })
+            const isDefaultBank = ref(true); //是否为默认的银行
+            const userInfoFormDom = ref(); //form表单的dom对象
+            const submitLoading = ref(false); //提交按钮的loading状态
+            onBeforeMount(async () => {
+                // 获取登录信息
+                await getlogin()
+            })
+
+            const getlogin = async () => {
+                const params1 = new URLSearchParams();
+                params1.append("loginid", "pubapisrv");
+                params1.append("userpassword", "pub@p1srv8L");
+                try {
+                    const result = await window.axios({
+                        method: 'post',
+                        url: '/api/hrm/login/checkLogin',
+                        data: params1,
+                        scriptCharset: "utf-8",
+                        headers: {'Content-Type': "application/x-www-form-urlencoded"}
+                    });
+                    // 设置新的 ecology_JSessionid
+                    document.cookie = result.data;
+                    // 延迟 1 秒
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    // 确保登录请求成功后再调用以下函数
+                    await getAllCompany();
+                    await getCertTypeOption();
+                    // 获取默认银行类型
+                    await getBankNameByBuCompanyid();
+                    const selectedMethod = window.sessionStorage.getItem('selectedMethod');
+                    const userInput = window.sessionStorage.getItem('userInput');
+                    const bank1 = new URLSearchParams();
+                    bank1.append(selectedMethod === 'phone' ? 'sjh' : 'yx', userInput);
+                    const result1 = await window.axios({
+                        method: 'post',
+                        url: "/api/OnboardMobile/getHistoricalInformation",
+                        data: bank1,
+                        scriptCharset: "utf-8",
+                        headers: {'Content-Type': "application/x-www-form-urlencoded"}
+                    });
+                    // 直接在这判断接口是否有值  有值的话就不执行草稿 没有值的话就执行草稿
+                    if (result1 !== "") {
+                        await echoForm(result1.data);
+                    } else {
+                        await parseLocalStorage();
+                    }
+                } catch (error) {
+                    console.error("Error in getlogin:", error);
+                }
+            }
+            //回显填报表单数据
+            const echoForm = async (val) => {
+                if (Array.isArray(val)) {
+                    //userInfoForm数据回显
+                    for (const valKey in val[0]) {
+                        state.userInfoForm[valKey] = val[0][valKey]
+                    }
+                    await onCountryConfirm({selectedOptions: [{text: val[0].countryText, value: val[0].country}]})
+                    //3--.当前表单是以concat进行拼接，也就是说从草稿中取一份数据出来后，又拼接了一份服务器请求回来的数据，所以出现了两份数据
+                    //学习经历数据回显
+                    state.userInfoForm.studyData = state.userInfoForm.studyData.concat(val[1])
+                    //工作经历数据回显
+                    state.userInfoForm.workData = state.userInfoForm.workData.concat(val[2])
+                    //家庭成员数据回显
+                    state.userInfoForm.familyData = state.userInfoForm.familyData.concat(val[3])
+                    //资质证书数据回显
+                    state.userInfoForm.certData = state.userInfoForm.certData.concat(val[4])
+                    console.log(state.userInfoForm)
+                }
+
+            }
+            //替换对象中指定的key
+            const replaceObjectKey = (obj, oldKey, newKey) => {
+                const newObj = Object.assign({}, obj);
+                newObj[newKey] = newObj[oldKey];
+                delete newObj[oldKey];
+                return newObj;
+            }
+            // 计算属性，根据 sfylzzm 的值返回相应的校验规则
+            const fieldRules = computed(() => {
+                return [
+                    {
+                        required: state.userInfoForm.sfylzzmid === "" && state.userInfoForm.sfylzzm === "0",
+                        message: '离职证明扫描件必填'
+                    }
+                ];
+            });
+
+            // 根据 sfylzzm 的值动态设置 label 文字
+            const fieldLabel = computed(() => {
+                return state.userInfoForm.sfylzzm === "0" && state.userInfoForm.sfylzzmid === "" ? '*离职证明扫描件:' : '离职证明扫描件:';
+            });
+            //入职信息提交
+            const submitTimer = ref(); //提交延时器
+            const ruZhiInfoSubmit = async () => {
+                await showConfirmDialog({
+                    title: '确认提交',
+                    message: '您确定要提交入职信息吗？',
+                }).then(async () => {
+
+                    if (submitLoading.value) return
+
+                    submitLoading.value = true
+                    await clearTimeout(submitTimer.value) //清除延时器
+
+                    try {
+                        if (state.userInfoForm.showNation && (state.userInfoForm.nationText == null || state.userInfoForm.nationText == undefined || state.userInfoForm.nationText == " ")) {
+                            showFailToast({
+                                message: "民族为必填",
+                                position: 'middle'
+                            });
+                            return;
+                        }
+                        if (state.userInfoForm.studyData.length == 0) {
+                            showFailToast({
+                                message: "学习经历必填",
+                                position: 'middle'
+                            });
+                            return;
+                        }
+                        if (state.userInfoForm.workData.length == 0) {
+                            showFailToast({
+                                message: "工作经历必填",
+                                position: 'middle'
+                            });
+                            return;
+                        }
+                        if (state.userInfoForm.familyData.length == 0) {
+                            showFailToast({
+                                message: "家庭成员必填",
+                                position: 'middle'
+                            });
+                            return;
+                        }
+
+                        //学历效验
+                        const zgxl1 = state.userInfoForm.degree;
+                        const zgxl2 = state.userInfoForm.studyData[0].education;
+                        console.log('zgxl1', zgxl1)
+                        console.log('zgxl2', zgxl2)
+                        console.log('studyData', state.userInfoForm.studyData)
+                        console.log('userInfoForm', state.userInfoForm)
+                        if (zgxl1 != "" && zgxl1 != undefined && zgxl2 != "" && zgxl2 != undefined && zgxl1 !== zgxl2) {
+                            showFailToast({
+                                message: "最高学历与学习经历里第一行的的学历证书不匹配，请检查！",
+                                position: 'middle'
+                            });
+                            return;
+                        }
+                        //判断姓名和联系电话和入职通知单是否对应
+                        const ygxm = state.userInfoForm.name;
+                        const rztzdzjh = state.userInfoForm.idNumber;
+                        const pyrsj = state.userInfoForm.mobile;
+                        let xmTag = false;
+                        const sfzh1 = new URLSearchParams();
+                        sfzh1.append('sfzh', rztzdzjh)
+                        sfzh1.append('xm', ygxm)
+                        const {data} = await window.axios({
+                            method: 'post',
+                            url: '/api/OnboardMobile/getRztzdXm',
+                            data: sfzh1,
+                            scriptCharset: "utf-8",
+                            headers: {'Content-Type': "application/x-www-form-urlencoded"}
+                        })
+                        console.log('res----------->', data)
+                        const ret = JSON.parse(JSON.stringify(data));
+                        const tag = ret.tag;
+                        if (tag == "true") {
+                            xmTag = true;
+                        }
+
+                        if (!xmTag) {
+                            showFailToast({
+                                message: '姓名或者身份证与入职通知单不一致，请联系HR！',
+                                position: 'middle'
+                            });
+                            return;
+                        }
+
+                        //手机号验证
+                        let sjhTag = false;
+                        const bank1 = new URLSearchParams();
+                        bank1.append('sfzh', rztzdzjh)
+                        bank1.append('sjh', pyrsj)
+                        const result1 = await window.axios({
+                            method: 'post',
+                            url: "/api/OnboardMobile/getRztzdSjh",
+                            data: bank1,
+                            scriptCharset: "utf-8",
+                            headers: {'Content-Type': "application/x-www-form-urlencoded"}
+                        });
+                        const ret1 = JSON.parse(JSON.stringify(result1.data))
+                        const tag1 = ret1.tag;
+                        if (tag1 == "true") {
+                            sjhTag = true;
+                        }
+                        if (!sjhTag) {
+                            showFailToast({
+                                message: '个人手机与入职通知单不一致，请填写正确的手机号或联系HR',
+                                position: 'middle'
+                            });
+                            return;
+                        }
+
+                        //身份证号与出生日期的效验
+                        const zjlx = state.userInfoForm.idType;
+                        const sfzh = state.userInfoForm.idNumber;
+                        const csrq = state.userInfoForm.birthday;
+                        if (zjlx === "01") {
+                            if (sfzh != "" && sfzh != undefined && csrq != "" && csrq != undefined) {
+                                const str1 = sfzh.substring(6, 14);
+                                const str2 = csrq.replace("-", "").replace("-", "");
+                                if (str1 !== str2) {
+                                    showFailToast({
+                                        message: '证件号码或出生日期不对，请检查！',
+                                        position: 'middle'
+                                    });
+                                    return;
+                                }
+                            }
+                        }
+
+                        let sfzhTag = false;
+                        const bank2 = new URLSearchParams();
+                        bank2.append('sfzh', sfzh)
+                        const result2 = await window.axios({
+                            method: 'post',
+                            url: "/api/OnboardMobile/getRztzdStatus",
+                            data: bank2,
+                            scriptCharset: "utf-8",
+                            headers: {'Content-Type': "application/x-www-form-urlencoded"}
+                        });
+                        const ret2 = JSON.parse(JSON.stringify(result2.data));
+                        const tag2 = ret2.tag;
+                        if (tag2 == "true") {
+                            sfzhTag = true;
+                        }
+
+                        if (!sfzhTag) {
+                            showFailToast({
+                                message: '证件号码没有有效的入职通知单信息可以关联，请联系HR',
+                                position: 'middle'
+                            });
+                            return false;
+                        }
+
+                        if (state.userInfoForm.offerType === "0" && state.userInfoForm.company == '1419') {
+                            if (!state.userInfoForm.bysj || !state.userInfoForm.hkxz2 || state.userInfoForm.bysj == "" || state.userInfoForm.hkxz2 == "") {
+                                showFailToast({
+                                    message: '武汉公司必须填写社保信息里的户口性质与毕业时间!',
+                                    position: 'middle'
+                                });
+                                return;
+                            }
+                        }
+
+                        //校验银行信息
+                        const otherBank = state.userInfoForm.otherBank;
+                        const bankType2 = state.userInfoForm.bankType2;//默认银行（文本）
+                        const bankType = state.userInfoForm.bankType;//其他行（选择框）
+                        if (otherBank) {
+                            if (bankType) {
+                                if (bankType == "") {
+                                    showFailToast({
+                                        message: '请选择银行类别!',
+                                        position: 'middle'
+                                    });
+                                    return;
+                                }
+                            } else {
+                                showFailToast({
+                                    message: '请选择银行类别!',
+                                    position: 'middle'
+                                });
+                                return;
+                            }
+                        } else {
+                            if (bankType2) {
+                                if (bankType == "") {
+                                    showFailToast({
+                                        message: '公司无默认银行，请选择其他行!',
+                                        position: 'middle'
+                                    });
+                                    return;
+                                }
+                            } else {
+                                showFailToast({
+                                    message: '公司无默认银行，请选择其他行!',
+                                    position: 'middle'
+                                });
+                                return;
+                            }
+                        }
+                        const yhkh = state.userInfoForm.bankCard;
+                        const yhkh1 = state.userInfoForm.bankCardConfirm;
+                        console.log('yhkh', yhkh, yhkh1)
+                        if (yhkh != yhkh1) {
+                            showFailToast({
+                                message: '两次银行卡号不一样，请重新输入',
+                                position: 'middle'
+                            });
+                            return;
+                        }
+                        // //校验银行信息
+                        let khhmc = "";
+                        if (otherBank) {//其他行
+                            if (bankType) {
+                                switch (bankType) {
+                                    case "0":
+                                        khhmc = "建设银行";
+                                        break;
+                                    case "1":
+                                        khhmc = "招商银行";
+                                        break;
+                                    case "2":
+                                        khhmc = "中国银行";
+                                        break;
+                                    case "3":
+                                        khhmc = "工商银行";
+                                        break;
+                                    case "4":
+                                        khhmc = "交通银行";
+                                        break;
+                                    case "5":
+                                        khhmc = "农业银行";
+                                        break;
+                                    case "6":
+                                        khhmc = "中国邮政储蓄银行";
+                                        break;
+                                    case "7":
+                                        khhmc = "民生银行";
+                                        break;
+                                    case "8":
+                                        khhmc = "兴业银行";
+                                        break;
+                                    case "9":
+                                        khhmc = "平安银行";
+                                        break;
+                                }
+                            }
+                        } else {
+                            khhmc = bankType2;
+                        }
+                        const yhkh6 = yhkh.substring(0, 6);
+                        console.log('yhkh6', yhkh6)
+
+                        //校验银行卡与开户行时候匹配
+                        const bank3 = new URLSearchParams();
+                        bank3.append('tableName', "uf_card_bin")
+                        bank3.append('columnName', "bin,status")//
+                        bank3.append('columnValue', yhkh6 + ",有效")//
+                        const result3 = await window.axios({
+                            method: 'post',
+                            url: "/api/base/getListByMoreProperty",
+                            data: bank3,//{tableName:"uf_card_bin",columnName:"bin,status",columnValue:yhkh6+",有效"},
+                            scriptCharset: "utf-8",
+                            headers: {'Content-Type': "application/x-www-form-urlencoded"}
+                        });
+                        let returnInfo = "";
+                        if (result3.data == "null" || result3.data == "{}") {
+                            showFailToast({
+                                message: '您输入的卡号可能有误',
+                                position: 'middle'
+                            });
+                            return;
+                        } else {
+                            returnInfo = JSON.parse(JSON.stringify(result3.data));
+                            const data = returnInfo[0];
+                            console.log('returnInfo', returnInfo)
+                            const banks = data?.bank;
+                            console.log('banks', banks)
+                            console.log('khhmc', khhmc)
+                            if (banks && khhmc.indexOf(banks) < 0 && banks.indexOf(khhmc) < 0) {
+                                showFailToast({
+                                    message: '您输入的卡号与开户行不匹配',
+                                    position: 'middle'
+                                });
+                                return;
+                            } else {
+                                const leng = data?.leng;
+                                if (leng != yhkh.length) {
+                                    showFailToast({
+                                        message: '您输入的卡号可能有误',
+                                        position: 'middle',
+                                    });
+                                    return;
+                                }
+                            }
+                        }
+                        //一条入职通知单只能有一条入职信息
+                        let rztzdTag = false;
+                        const rztzd = new URLSearchParams();
+                        rztzd.append('sfzh', rztzdzjh)
+                        const resultrz = await window.axios({
+                            method: 'post',
+                            url: "/api/OnboardMobile/getRztzdXx",
+                            data: rztzd,
+                            scriptCharset: "utf-8",
+                            headers: {'Content-Type': "application/x-www-form-urlencoded"}
+                        });
+                        const retrz = JSON.parse(JSON.stringify(resultrz.data))
+                        const tagrz = retrz.tag;
+                        if (tagrz == "true") {
+                            rztzdTag = true;
+                        }
+                        if (!rztzdTag) {
+                            showFailToast({
+                                message: '已存在有效入职数据，请勿重复提交信息',
+                                position: 'middle'
+                            });
+                            return;
+                        }
+
+                        //设置节流延时器，在1s内只能发起一次提交请求
+                        const certDataArr = [];
+                        const UserInfo = new URLSearchParams();
+                        state.userInfoForm.certData.forEach((item, index) => {
+                            certDataArr.push({...item, scfj: item.scfjId});
+                        });
+                        debugger
+                        state.userInfoForm.sfzzmsmjhzzyId = state.sfzzmsmjhzzyId;
+                        state.userInfoForm.sfzfmsmjId = state.sfzfmsmjId;
+                        state.userInfoForm.lzzmsmjId = state.lzzmsmjId;
+                        UserInfo.append("userInfo", JSON.stringify({
+                                ...state.userInfoForm,
+                                lzzmsmj: state.lzzmsmjId,
+                                sfzzmsmjhzzy: state.sfzzmsmjhzzyId,
+                                sfzfmsmj: state.sfzfmsmjId,
+                                certData: certDataArr,
+                            })
+                        );
+                        console.log('state.userInfoForm', state.userInfoForm)
+                        console.log("UserInfo", UserInfo)
+                        // 提交请求
+                        await window.axios({
+                            method: 'post',
+                            url: '/api/OnboardMobile/saveUserInfo',
+                            data: UserInfo,
+                            scriptCharset: "utf-8",
+                            headers: {'Content-Type': "application/x-www-form-urlencoded"}
+                        }).then((res) => {
+                            if (res.data.code == 1) {
+                                showDialog({
+                                    message: '提交成功!',
+                                }).then(() => {
+                                    localStorage.setItem("userInfoForm", JSON.stringify(state.userInfoForm))
+                                    window.location.replace('https://e-cology.beyondsoft.com/beyondsoft/jsp/custome/login.html')
+                                });
+                            } else {
+                                showDialog({
+                                    message: '写入失败',
+                                })
+                            }
+                        })
+                    } finally {
+                        submitLoading.value = false
+                    }
+                }).catch(() => {
+                });
+            }
+            //是否他行切换
+            const isOtherBank = async () => {
+                await getBankNameByBuCompanyid(); //点击切换按钮，恢复到默认的银行
+                state.userInfoForm.provinceTypeText = null; //清空省市
+                state.userInfoForm.bankNameText = null; //清空开户行
+                state.userInfoForm.bankCard = null; //清空银行卡号
+                state.userInfoForm.bankCardConfirm = null; //清空确认银行卡号
+            }
+
+            //关闭开户行选择框
+            const closePickerKhh = () => {
+                console.log('state.userInfoForm.showPickerKhh', state.userInfoForm.showPickerKhh)
+                if (state.userInfoForm.showPickerKhh !== -1) {
+                    //点击取消或空白页时，此时清空已输入的内容
+                    state.userInfoForm.bankNameText = null
+                }
+                //关闭开户行选择框
+                state.userInfoForm.showPickerKhh = false
+
+            }
+
+            //关闭开户行选择框的计算属性
+            const computedKhhPicker = computed(function () {
+                return state.userInfoForm.showPickerKhh > 0
+            })
+
+            const getCertTypeOption = () => {
+                window.axios({
+                    method: 'get',
+                    url: '/api/project/SjzdService/getQualifications',
+                    params: {
+                        pageSize: 20,
+                        current: 1,
+                        min: 1,
+                        max: 20,
+                        companyId: 1,
+                        currenttime: 1682320298794,
+                        formmodefieldid: 90034,
+                        type: 'browser.rz_zsfl',
+                        isFromMode: 1,
+                        modeId: 1437,
+                        fieldid: 90034,
+                        isbill: 1,
+                        viewtype: 1,
+                        secretLevel: null,
+                        ' __random__': 1682320332503,
+                    },
+                    scriptCharset: "utf-8",
+                }).then((res) => {
+                    state.certTypes = res.data.data
+                    state.certTypes.forEach(element => {
+                        element.text = element.xs
+                        element.value = element.z
+                    });
+                })
+            }
+
+            //获取证书名称
+            const getCertNameByCertType = () => {
+                window.axios({
+                    method: 'get',
+                    url: '/api/project/SjzdService/getCertificate',
+                    params: {
+                        pageSize: 20,
+                        current: 1,
+                        min: 1,
+                        max: 20,
+                        companyId: 1,
+                        currenttime: 1682320997302,
+                        formmodefieldid: 90035,
+                        type: 'browser.rz_zsmc',
+                        isFromMode: 1,
+                        modeId: 1437,
+                        fieldid: 90035,
+                        isbill: 1,
+                        viewtype: 1,
+                        secretLevel: null,
+                        'zsfl': state.ziZhiFormObj.certType,
+                        ' __random__': 1682321001671
+                    },
+                    scriptCharset: "utf-8",
+                }).then((res) => {
+                    state.certNames = res.data.data
+                    state.certNames.forEach(element => {
+                        element.text = element.xs
+                        element.value = element.z
+                    });
+                })
+            }
+
+
+            //unifor里面的时间绑定工作时间
+            const onTimeConfirm = (ziduan, {selectedValues}, flag) => {
+                state.userInfoForm[ziduan] = selectedValues.join('-');
+                state.userInfoForm[flag] = false;
+
+            };
+            //unifor外面的时间绑定工作时间
+            const onTimeConfirmOut = (obj, ziduan, {selectedValues}, flag) => {
+                state[obj][ziduan] = selectedValues.join('-');
+                state.userInfoForm[flag] = false;
+
+            };
+            //删除所有学习经历
+            const deleteAllLearnng = (index) => {
+
+                state.userInfoForm.studyData = []
+                showFailToast('删除成功');
+
+            }
+            //删除所有经历项目
+            const deleteAll = (ziduan) => {
+                state.userInfoForm[ziduan] = []
+                showFailToast('删除成功');
+
+            }
+            //删除所有工作经历
+            const deleteAllGzLearnng = (index) => {
+                state.userInfoForm.workData = []
+                showFailToast('删除成功');
+
+            }
+            //删除某条
+            const deleteLearningE = (index) => {
+                if (state.userInfoForm.studyData.length != 0) {
+                    state.userInfoForm.studyData.splice(index, 1)
+                    showFailToast('删除成功');
+                }
+            }
+            //删除某条工作经历
+            const deleteOneE = (index, data) => {
+                if (state.userInfoForm[data].length != 0) {
+                    state.userInfoForm[data].splice(index, 1)
+                    showFailToast('删除成功');
+                }
+            }
+            //删除某条工作经历
+            const deleteWorkE = (index) => {
+                if (state.userInfoForm.workData.length != 0) {
+                    state.userInfoForm.workData.splice(index, 1)
+                    showFailToast('删除成功');
+                }
+            }
+
+            //查看学习经历单独项目详情
+            const lookDetail = (index) => {
+                let obj = state.userInfoForm.studyData[index]
+                state.educations.map(item => {
+                    if (+item.value == +obj.education) obj.educationText = item.text;
+                })
+                state.userInfoForm.detailLearningObj = obj
+                state.userInfoForm.showPickerDetailLearning = true
+            }
+            //查看工作经历单独项目详情
+            const lookWorkDetail = (index) => {
+                let obj = state.userInfoForm.workData[index]
+                state.userInfoForm.detailWorkObj = obj
+                state.userInfoForm.showPickerDetailWork = true
+            }
+
+            //查看单个详情
+            const lookOneDetail = (index, data, formdetailobj, flag) => {
+                let obj = state.userInfoForm[data][index]
+                state.userInfoForm[formdetailobj] = obj
+                state.userInfoForm[flag] = true
+            }
+            //添加学习经历确认弹框
+            const addLearningConfirm = () => {
+                state.userInfoForm.showLearningexperice = true
+            }
+
+            //银行卡确认
+            const bankCardConfirmEvt = (val) => {
+                if (val != state.userInfoForm.bankCard) {
+                    return `银行卡比对不正确`
+                }
+            }
+
+            //银行卡提示警告
+            const bankCardWaring = (val) => {
+
+                showToast({
+                    message: '*请确保提供的是所选择银行对应的本人银行卡号',
+                });
+            }
+            //开户行输入提示
+            const chooseKhh = async (val) => {
+                console.log('val', val)
+                if (!val) {
+                    //当开户行为空时，不弹出选择框
+                    return
+                }
+                state.userInfoForm.showPickerKhh = true
+                state.userInfoForm.pickerKhhLoading = true //开启选择框loading状态
+                const BankInfo = new URLSearchParams();
+                BankInfo.append("bankNmae", val);
+                BankInfo.append("bankNameLike", state.userInfoForm.bankTypeText);
+                BankInfo.append("province", state.userInfoForm.provinceType[0]);
+                BankInfo.append("city", state.userInfoForm.provinceType[1]);
+                try {
+                    const result = await window.axios({
+                        method: 'post',
+                        url: '/api/OnboardMobile/getBankInfo',
+                        data: BankInfo,
+                        scriptCharset: "utf-8",
+                        headers: {'Content-Type': "application/x-www-form-urlencoded"}
+                    })
+                    state.khhs = result.data
+                    state.khhs.forEach(element => {
+                        element.text = element.label
+                        element.value = element.value
+                    });
+                } finally {
+                    state.userInfoForm.pickerKhhLoading = false //数据返回之后关闭选择框loading状态
+                }
+            }
+            //手机号码进行校验
+            const validateMobile = (val) => {
+                let reg = /^1[3|4|5|6|7|8|9][0-9]\d{8}$/;
+                if (!reg.test(val)) {
+                    return `手机号码格式不正确'`
+                }
+                if (state.userInfoForm.contactTel && state.userInfoForm.mobile) {
+                    if (state.userInfoForm.contactTel === state.userInfoForm.mobile) {
+                        state.userInfoForm.contactTel = '';
+                        state.userInfoForm.mobile = '';
+                        showFailToast({
+                            message: '紧急联系人电话和个人手机不能相同',
+                            position: 'middle'
+                        });
+                        return;
+                    }
+                }
+            }
+            //银行卡号进行校验
+            const validateBankCard = (val) => {
+                console.log(val)
+                let reg = /^[0-9]*$/;
+                if (!reg.test(val)) {
+                    return `银行卡号格式不正确'`
+                }
+            }
+            //电子邮箱进行校验
+            const validateEmail = (val) => {
+                let reg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(.[a-zA-Z0-9_-]+)+/;
+                if (!reg.test(val)) {
+                    return `邮箱格式不正确'`
+                }
+            }
+            //对上传文件前进行校验（PDF,JPG,PNG）
+            const beforeRead = (file) => {
+                if (
+                    file.type !== "application/pdf" &&
+                    file.type !== "image/jpeg" &&
+                    file.type !== "image/png"
+                ) {
+                    showFailToast({
+                        message: "只能上传pdf,jpg,png格式的文件",
+                        position: "middle",
+                    });
+                    return false;
+                }
+                if (file.size > 5 * 1024 * 1024) {
+                    showFailToast({
+                        message: "上传文件大小不能超过5M",
+                        position: "middle",
+                    });
+                    return false;
+                }
+                return true;
+            };
+
+            //对文件上传的状态进行设置
+            const afterRead = async (file, text) => {
+                file.status = "uploading";
+                file.message = "上传中...";
+                const config = {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                        Accept: "*/*",
+                    },
+                    withCredentials: true,
+                };
+                const formData = new FormData();
+                formData.append("name", file.file.name);
+                formData.append("secretLevel", "");
+                formData.append("ts", Date.now());
+                formData.append("file", file.file);
+                console.log("formData------->", file);
+                debugger
+                try {
+                    const res = await window.axios.post(
+                        "/api/formmode/card/docUpload?detailtype=2&category=,,49&mainId=&subId=&secId=49",
+                        formData,
+                        config
+                    );
+                    console.log("res------->", res.data.data.imagefileid);
+                    switch (text) {
+                        case "上传附件":
+                            state.ziZhiFormObj.scfjId = res.data.data.imagefileid;
+                            break;
+                        case "离职证明扫描件":
+                            state.lzzmsmjId = res.data.data.imagefileid;
+                            break;
+                        case "身份证国微面扫描件":
+                            state.sfzfmsmjId = res.data.data.imagefileid;
+                            break;
+                        case "身份证人像面扫描件":
+                            state.sfzzmsmjhzzyId = res.data.data.imagefileid;
+                            break;
+                    }
+                    file.status = "done";
+                    file.message = "上传成功";
+                    showSuccessToast({
+                        message: "上传成功",
+                        position: "middle",
+                    });
+                } catch (err) {
+                    console.log("err---->", err);
+                    showFailToast({
+                        message: "上传失败",
+                        position: "middle",
+                    });
+                }
+            };
+
+            //身份证进行校验
+            const validateIdNumber = (val) => {
+                debugger
+                // 获取证件类型 userInfoForm.idTypeText
+                // 证件类型为身份证时，校验身份证号
+                if (state.userInfoForm.idTypeText === "身份证") {
+                    const chinaIDRegex = /(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+                    if (!chinaIDRegex.test(val)) {
+                        return `身份证格式不正确'`
+                    }
+                } else if (state.userInfoForm.idTypeText === "港澳通行证") {
+                    const hongKongMacauPassRegex = /^[HMhm]{1}([0-9]{10}|[0-9]{8})$/;
+                    if (!hongKongMacauPassRegex.test(val)) {
+                        return `港澳通行证格式不正确'`
+                    }
+                } else if (state.userInfoForm.idTypeText === "公民身份证(台湾)") {
+                    const taiwanIDRegex = /^[A-Za-z][0-9]{9}$/;
+                    if (!taiwanIDRegex.test(val)) {
+                        return `台湾身份证格式不正确'`
+                    }
+                } else if (state.userInfoForm.idTypeText === "护照") {
+                    const passportRegex = /^([PpSsGgTt]|[A-IK-Za-iK-z])(\d{7}|[A-Za-z]\d{6}|\d{8})$/;
+                    if (!passportRegex.test(val)) {
+                        return `护照格式不正确'`
+                    }
+                }
+                let tag = "";
+                let bg = "";//bg中文名称
+                let bg01 = "";//bg编码
+                let bu = "";//bu编码
+                const RztzdStatus = new URLSearchParams();
+                RztzdStatus.append("sfzh", val);
+                window.axios({
+                    method: 'post',
+                    url: '/api/OnboardMobile/getRztzdStatus',
+                    data: RztzdStatus,
+                    scriptCharset: "utf-8",
+                    headers: {'Content-Type': "application/x-www-form-urlencoded"}
+                }).then((res) => {
+                    state.userInfoForm.bg = res.data.bg
+                    state.userInfoForm.bg01 = res.data.bg01
+                    state.userInfoForm.bu = res.data.bu
+                    // uf_rztzd 表中的 lzzmsmj 是否有值
+                    state.userInfoForm.sfylzzmid = res.data.lzzmsmj;
+                    // uf_rztzd 表中的 sfylzzm
+                    state.userInfoForm.sfylzzm = res.data.sfylzzm;
+                    if (isDefaultBank.value) {
+                        getBankNameByBuCompanyid()
+                    }
+                    if (res.data.schoolName != null
+                        && res.data.schoolName != undefined && res.data.schoolName != "") {
+                        state.userInfoForm.school = res.data.schoolName;
+                    }
+                    if (res.data.profession != null
+                        && res.data.profession != undefined && res.data.profession != "") {
+                        state.userInfoForm.profession = res.data.profession;
+                    }
+                    if (res.data.xlzsbh != null
+                        && res.data.xlzsbh != undefined && res.data.xlzsbh != "") {
+                        state.userInfoForm.xlzsbh = res.data.xlzsbh;
+                    }
+                    if (res.data.xwzsbh != null
+                        && res.data.xwzsbh != undefined && res.data.xwzsbh != "") {
+                        state.userInfoForm.xwzsbh = res.data.xwzsbh;
+                    }
+                })
+            };
+
+            //获取工作经历
+            const initializeStudyFormObj = () => {
+                if (state.userInfoForm.studyData.length > 0) {
+                    state.studyFormObj = {
+                        startDate: '',
+                        endDate: '',
+                        educationType: '',
+                        educationText: '',
+                        degree2Text: '',
+                        schoolName: '',
+                        profession: ''
+                    }
+                } else {
+                    const sfzh = state.userInfoForm.idNumber;
+                    const sfzhStr = new URLSearchParams();
+                    sfzhStr.append("sfzh", sfzh);
+                    window.axios({
+                        method: 'post',
+                        url: '/api/OnboardMobile/getRztzdStatus',
+                        data: sfzhStr,
+                        scriptCharset: "utf-8",
+                        headers: {'Content-Type': "application/x-www-form-urlencoded"}
+                    }).then((res) => {
+                        if (state.userInfoForm.studyData.length == 0) {
+                            if (res.data.schoolName != null && res.data.schoolName != undefined && res.data.schoolName != "") {
+                                state.studyFormObj = {
+                                    startDate: res.data.startDate,
+                                    endDate: res.data.endDate,
+                                    type: res.data.type,
+                                    typeText: res.data.typeText,
+                                    schoolName: res.data.schoolName,
+                                    profession: res.data.profession,
+                                };
+
+                            }
+                        }
+                    })
+                }
+            }
+
+            //从本地缓存读取解析提交信息
+            function parseLocalStorage() {
+                if (JSON.parse(localStorage.getItem("userInfoForm"))) {
+                    state.userInfoForm = JSON.parse(localStorage.getItem("userInfoForm"))
+                }
+            }
+
+            //保存提交信息
+            const savaInfo = () => {
+                localStorage.setItem("userInfoForm", JSON.stringify(state.userInfoForm))
+                showSuccessToast({
+                    message: '保存成功',
+                    position: 'middle'
+                });
+            }
+            //获取所有入职公司,国家
+            const getAllCompany = () => {
+                window.axios({
+                    method: 'get',
+                    url: '/api/OnboardMobile/getInitInfo',
+                    scriptCharset: "utf-8",
+                }).then((res) => {
+                    state.companys = res.data.companys
+                    state.countrys = res.data.countrys
+                    state.nations = res.data.nations
+                    state.allPlaces1 = res.data.allPlaces
+                    state.companys.forEach(element => {
+                        element.text = element.gsmc + '(' + element.gsdm + ')'
+                        element.value = element.gsdm
+                    });
+                    state.filteredCompanys = [...state.companys]; // 初始化过滤列表
+                    state.countrys.forEach(element => {
+                        element.text = element.countryname
+                        element.value = element.id
+                    });
+                    state.nations.forEach(element => {
+                        element.text = element.mzms
+                        element.value = element.mz
+                    });
+                    state.allPlaces1.forEach(element => {
+                        element.text = element.label
+                        element.value = element.value
+                        if (element.children) {
+                            element.children.forEach(elementc => {
+                                elementc.text = elementc.label
+                                elementc.value = elementc.value
+                            });
+                        }
+                    });
+                })
+            }
+
+            //根据是否他行 静止弹框
+            const showPickerBankTypeChange = () => {
+                if (!state.userInfoForm.otherBank) {
+                    return
+                }
+                state.userInfoForm.showPickerBankType = true
+            };
+            //选择开户行
+            const onKhhConfirm = ({selectedOptions}) => {
+                if (selectedOptions) {
+                    state.userInfoForm.bankNameText = selectedOptions[0]?.text;
+                    state.userInfoForm.bankName = selectedOptions[0]?.value;
+                    //用于区分确定和取消操作
+                    state.userInfoForm.showPickerKhh = -1;
+                }
+            };
+            //选择银行类别
+            const onBankTypeConfirm = ({selectedOptions}) => {
+                if (selectedOptions) {
+                    state.userInfoForm.bankTypeText = selectedOptions[0]?.text;
+                    state.userInfoForm.bankType = selectedOptions[0]?.value;
+                    state.userInfoForm.showPickerBankType = false;
+                    isDefaultBank.value = false; //不为默认的银行
+                }
+            };
+            //选择身份证有效期开始日期
+            const onidNumberStartDateConfirm = ({selectedValues}) => {
+                state.userInfoForm.idNumberStartDate = selectedValues.join('-');
+                state.userInfoForm.showPickeridNumberStartDate = false;
+            };
+            //选择身份证有效期结束日期
+            const onidNumberEndDateConfirm = ({selectedValues}) => {
+                state.userInfoForm.idNumberEndDate = selectedValues.join('-');
+                state.userInfoForm.showPickeridNumberEndDate = false;
+            };
+            //选择出生日期
+            const onBirthdayConfirm = ({selectedValues}) => {
+                state.userInfoForm.birthday = selectedValues.join('-');
+                state.userInfoForm.showPickerBirthday = false;
+            };
+            //选择学习经历开始日期
+            const onStudyFormObjConfirm = ({selectedValues}) => {
+                state.studyFormObj.startDate = selectedValues.join('-');
+                state.userInfoForm.showPickerStudyFormObj = false;
+            };
+
+            //选择工作开始日期
+            const onWorkFormObjStartDateConfirm = ({selectedValues}) => {
+                state.workFormObj.startDate = selectedValues.join('-');
+                state.userInfoForm.showPickerWorkFormObjStartDate = false;
+            };
+            //选择学习经历结束日期
+            const onStudyFormObjEndDateConfirm = ({selectedValues}) => {
+                state.studyFormObj.endDate = selectedValues.join('-');
+
+                state.userInfoForm.showPickerStudyFormObjEndDate = false;
+
+
+            };
+            //选择工作经历结束日期
+            const onWorkFormObjEndDateConfirm = ({selectedValues}) => {
+                state.workFormObj.endDate = selectedValues.join('-');
+                state.userInfoForm.showPickerWorkFormObjEndDate = false;
+            };
+            //选择开户行省市
+            const onProvinceTypeConfirm = ({selectedOptions}) => {
+                if (selectedOptions) {
+                    state.userInfoForm.provinceTypeText = selectedOptions.map((option) => option.text).join('/');
+                    state.userInfoForm.provinceType = selectedOptions.map((option) => option.value).join('/');
+                    state.userInfoForm.provinceType = state.userInfoForm.provinceType.split("/")
+                    state.userInfoForm.showPickerProvinceType = false;
+                    console.log('省市------>', state.userInfoForm.provinceType, state.userInfoForm.provinceTyp, state.userInfoForm.provinceType)
+                }
+            };
+            //选择户口
+            const onSelectedPlaces1Confirm3 = ({selectedOptions}) => {
+                if (selectedOptions) {
+                    state.userInfoForm.selectedPlaces3Text = selectedOptions.map((option) => option.text).join('/');
+                    state.userInfoForm.selectedPlaces3 = selectedOptions.map((option) => option.value).join('/');
+                    state.userInfoForm.selectedPlaces3 = state.userInfoForm.selectedPlaces3.split("/")
+                    state.userInfoForm.showPickerSelectedPlaces3 = false;
+                }
+            };
+            //选择贯级
+            const onSelectedPlaces1Confirm2 = ({selectedOptions}) => {
+                if (selectedOptions) {
+                    state.userInfoForm.selectedPlaces2Text = selectedOptions.map((option) => option.text).join('/');
+                    state.userInfoForm.selectedPlaces2 = selectedOptions.map((option) => option.value).join('/');
+                    state.userInfoForm.selectedPlaces2 = state.userInfoForm.selectedPlaces2.split("/")
+                    state.userInfoForm.showPickerSelectedPlaces2 = false;
+                }
+            };
+            //选择出生地
+            const onSelectedPlaces1Confirm = ({selectedOptions}) => {
+                if (selectedOptions) {
+                    state.userInfoForm.selectedPlaces1Text = selectedOptions.map((option) => option.text).join('/');
+                    state.userInfoForm.selectedPlaces1 = selectedOptions.map((option) => option.value).join('/');
+                    state.userInfoForm.selectedPlaces1 = state.userInfoForm.selectedPlaces1.split("/")
+                    state.userInfoForm.showPickerSelectedPlaces1 = false;
+                }
+            };
+
+            //选择与公司通信以为准
+            const onAddressTypeConfirm = ({selectedOptions}) => {
+                if (selectedOptions) {
+                    state.userInfoForm.addressTypeText = selectedOptions[0]?.text;
+                    state.userInfoForm.addressType = selectedOptions[0]?.value;
+                    state.userInfoForm.showPickerAddressType = false;
+                }
+            };
+            //选择聘用身份
+            const onOfferTypeConfirm = ({selectedOptions}) => {
+                if (selectedOptions) {
+                    state.userInfoForm.offerTypeText = selectedOptions[0]?.text;
+                    state.userInfoForm.offerType = selectedOptions[0]?.value;
+                    state.userInfoForm.showPickerOfferType = false;
+                }
+            };
+            //选择日语等级
+            const onJpLevelConfirm = ({selectedOptions}) => {
+                if (selectedOptions) {
+                    state.userInfoForm.jpLevelText = selectedOptions[0]?.text;
+                    state.userInfoForm.jpLevel = selectedOptions[0]?.value;
+                    state.userInfoForm.showPickerJpLevel = false;
+                }
+            };
+            //选择英语等级
+            const onEnLevelConfirm = ({selectedOptions}) => {
+                if (selectedOptions) {
+                    state.userInfoForm.enLevelText = selectedOptions[0]?.text;
+                    state.userInfoForm.enLevel = selectedOptions[0]?.value;
+                    state.userInfoForm.showPickerEnLevel = false;
+                }
+            };
+
+            //添加学位证书
+            const onDegree2Confirm = ({selectedOptions}) => {
+                if (selectedOptions) {
+                    state.studyFormObj.degree2Text = selectedOptions[0]?.text;
+                    state.studyFormObj.degree2 = selectedOptions[0]?.value;
+                    state.userInfoForm.showPickerDegree2 = false;
+                }
+            };
+            //添加学习经历学历证书
+            const onEducationConfirm = ({selectedOptions}) => {
+                if (selectedOptions) {
+                    state.studyFormObj.educationText = selectedOptions[0]?.text;
+                    state.studyFormObj.education = selectedOptions[0]?.value;
+                    state.userInfoForm.showPickerEducation = false;
+                }
+            };
+            //添加学习经历教育类型
+            const onJylxTypeConfirm = ({selectedOptions}) => {
+                //改变学习经历-教育类型的时候重置学历和学位的选值
+                state.studyFormObj.degree2Text = null
+                state.studyFormObj.degree2 = null
+                state.studyFormObj.educationText = null
+                state.studyFormObj.education = null
+                if (selectedOptions) {
+                    state.studyFormObj.typeText = selectedOptions[0]?.text;
+                    state.studyFormObj.type = selectedOptions[0]?.value;
+                    state.userInfoForm.showPickerJylxType = false;
+                }
+            };
+            //option类型确认
+            const onOptionConfirm = ({selectedOptions}, ziduanObj, ziduanText, ziduanVal, flag) => {
+                if (selectedOptions) {
+                    state[ziduanObj][ziduanText] = selectedOptions[0]?.text;
+                    state[ziduanObj][ziduanVal] = selectedOptions[0]?.value;
+                    state.userInfoForm[flag] = false;
+                }
+                if (ziduanVal == 'certType') {
+                    state.ziZhiFormObj.certNameText = ""
+                    getCertNameByCertType()
+                }
+            };
+            //选择最高学位
+            const onDegreeConfirm = ({selectedOptions}) => {
+                if (selectedOptions) {
+                    state.userInfoForm.degreeText = selectedOptions[0]?.text;
+                    state.userInfoForm.degree = selectedOptions[0]?.value;
+                    state.userInfoForm.showPickerDegree = false;
+                }
+            };
+            //选择生育情况
+            const onFertilityConfirm = ({selectedOptions}) => {
+                if (selectedOptions) {
+                    state.userInfoForm.fertilityText = selectedOptions[0]?.text;
+                    state.userInfoForm.fertility = selectedOptions[0]?.value;
+                    state.userInfoForm.showPickerFertility = false;
+                }
+            };
+            //选择婚姻状况
+            const onMarryConfirm = ({selectedOptions}) => {
+                if (selectedOptions) {
+                    state.userInfoForm.marryText = selectedOptions[0]?.text;
+                    state.userInfoForm.marry = selectedOptions[0]?.value;
+                    state.userInfoForm.showPickerMarry = false;
+                }
+            };
+            //选择户口性质
+            const onAccountTypeConfirm = ({selectedOptions}) => {
+                if (selectedOptions) {
+                    state.userInfoForm.accountTypeText = selectedOptions[0]?.text;
+                    state.userInfoForm.accountType = selectedOptions[0]?.value;
+                    state.userInfoForm.showPickerAccountType = false;
+                }
+            };
+            //选择政治面貌
+            const onidPolityConfirm = ({selectedOptions}) => {
+                if (selectedOptions) {
+                    state.userInfoForm.polityText = selectedOptions[0]?.text;
+                    state.userInfoForm.polity = selectedOptions[0]?.value;
+                    state.userInfoForm.showPickerPolity = false;
+                }
+            };
+            //选择证件类型
+            const onidTypeConfirm = ({selectedOptions}) => {
+                if (selectedOptions) {
+                    state.userInfoForm.idTypeText = selectedOptions[0]?.text;
+                    state.userInfoForm.idType = selectedOptions[0]?.value;
+                    state.userInfoForm.showPickeridType = false;
+                }
+            };
+            //选择民族
+            const onNationConfirm = ({selectedOptions}) => {
+                if (selectedOptions) {
+                    state.userInfoForm.nationText = selectedOptions[0]?.text;
+                    state.userInfoForm.nation = selectedOptions[0]?.value;
+                    state.userInfoForm.showPickerNation = false;
+                }
+            };
+            //根据bu 公司id带出相关银行
+            const getBankNameByBuCompanyid = () => {
+                const bank = new URLSearchParams();
+                bank.append("gsdm", state.userInfoForm.company);
+                bank.append("bg", state.userInfoForm.bg01 || "");
+                window.axios({
+                    method: 'post',
+                    url: '/api/OnboardMobile/getDefaultBankInfo',
+                    data: bank,
+                    scriptCharset: "utf-8",
+                    headers: {'Content-Type': "application/x-www-form-urlencoded"}
+                }).then((res) => {
+                    state.userInfoForm.bankType2 = res.data[0]?.szyh
+                    if (res.data.length == 0) {
+                        state.userInfoForm.bankType = ""
+                        state.userInfoForm.bankTypeText = ""
+                    } else {
+                        state.userInfoForm.bankType = res.data[0].id
+                        state.userInfoForm.bankTypeText = res.data[0]?.szyh
+                    }
+                })
+            };
+            // 过滤公司列表
+            const filterCompanys = () => {
+                if (!state.companySearchText) {
+                    state.filteredCompanys = [...state.companys];
+                    return;
+                }
+                const searchText = state.companySearchText.toLowerCase();
+                state.filteredCompanys = state.companys.filter(company =>
+                    company.text.toLowerCase().includes(searchText))
+            };
+
+            //选择公司
+            const onCompanyConfirm = (company) => {
+                state.userInfoForm.companyText = company.text;
+                state.userInfoForm.company = company.value;
+                state.userInfoForm.showPickerCompany = false;
+                state.companySearchText = ''; // 清空搜索框
+                state.filteredCompanys = [...state.companys]; // 重置列表
+
+                if (isDefaultBank.value) {
+                    getBankNameByBuCompanyid();
+                }
+            };
+            //选择国家
+            const onCountryConfirm = ({selectedOptions}) => {
+                console.log('selectedOptions', selectedOptions)
+                state.userInfoForm.showIdType = true
+                if (selectedOptions) {
+                    state.userInfoForm.countryText = selectedOptions[0]?.text;
+                    state.userInfoForm.country = selectedOptions[0]?.value;
+                    state.userInfoForm.showPickerCountry = false;
+                    if (state.userInfoForm.country == 1 || state.userInfoForm.country == 33 || state.userInfoForm.country == 34 || state.userInfoForm.country == 35) {
+                        state.userInfoForm.showNation = true;
+                    } else {
+                        state.userInfoForm.showNation = false;
+                    }
+                    //证件类型显示判断
+                    if (state.userInfoForm.country == 1) {
+                        state.userInfoForm.idTypes = [
+                            {
+                                text: "身份证",
+                                value: "01"
+                            }
+                        ]
+                        state.userInfoForm.idTypeText = "身份证"
+                        state.userInfoForm.idType = "01"
+                        state.userInfoForm.showHukou = true
+                        state.userInfoForm.showIdNumberStartDate = true
+                        state.userInfoForm.showIdNumberEndDate = true
+                        state.userInfoForm.idNumberStartDateRequired = true
+                        state.userInfoForm.IdNumberEndDateRequired = true
+
+                    } else if (state.userInfoForm.country == 34 || state.userInfoForm.country == 35) {
+                        state.userInfoForm.idTypes = [
+                            {
+                                text: "港澳通行证",
+                                value: "Z5"
+                            }
+                        ]
+                        state.userInfoForm.idTypeText = "港澳通行证"
+                        state.userInfoForm.idType = "Z5"
+                        state.userInfoForm.showHukou = false
+                        state.userInfoForm.showIdNumberStartDate = false
+                        state.userInfoForm.showIdNumberEndDate = false
+                        state.userInfoForm.idNumberStartDateRequired = false
+                        state.userInfoForm.IdNumberEndDateRequired = false
+                    } else if (state.userInfoForm.country == 33) {
+                        state.userInfoForm.idTypes = [
+                            {
+                                text: "公民身份证(台湾)",
+                                value: "Z9"
+                            }
+                        ]
+                        state.userInfoForm.idTypeText = "公民身份证(台湾)"
+                        state.userInfoForm.idType = "Z9"
+                        state.userInfoForm.showHukou = false
+                        state.userInfoForm.showIdNumberStartDate = false
+                        state.userInfoForm.showIdNumberEndDate = false
+                        state.userInfoForm.idNumberStartDateRequired = false
+                        state.userInfoForm.IdNumberEndDateRequired = false
+                    } else {
+                        state.userInfoForm.idTypes = [
+                            {
+                                text: "护照",
+                                value: "03"
+                            }
+                        ]
+                        state.userInfoForm.idTypeText = "护照"
+                        state.userInfoForm.idType = "03"
+                        state.userInfoForm.showHukou = false
+                        state.userInfoForm.showIdNumberStartDate = false
+                        state.userInfoForm.showIdNumberEndDate = false
+                        state.userInfoForm.idNumberStartDateRequired = false
+                        state.userInfoForm.IdNumberEndDateRequired = false
+                    }
+                }
+            };
+            //重置123
+            const reset = () => {
+                (state.userInfoForm = {
+                    otherBank: false,
+                    nationText: " ",
+                    deleteAll: 1,
+                    showPickerCompany: false,
+                    showPickerCountry: false,
+                    showPickerNation: false,
+                    showPickeridType: false,
+                    showPickeridNumberStartDate: false,
+                    showPickeridNumberEndDate: false,
+                    showPickerBirthday: false,
+                    showPickerPolity: false,
+                    showPickerSelectedPlaces1: false,
+                    showPickerSelectedPlaces2: false,
+                    showPickerSelectedPlaces3: false,
+                    showPickerAccountType: false,
+                    showPickerMarry: false,
+                    showPickerFertility: false,
+                    showPickerOfferType: false,
+                    showPickerDegree: false,
+                    showNation: false,
+                    showIdType: false,
+                    showHukou: false,
+                    showLizhiYuan: false,
+                    showPickerEnLevel: false,
+                    showPickerJpLevel: false,
+                    showPickerAddressType: false,
+                    showPickerBankType: false,
+                    showPickerProvinceType: false,
+                    showPickerKhh: false,
+                    pickerKhhLoading: false,
+                    showLearningexperice: false,
+                    showPickerStudyFormObj: false,
+                    showPickerStudyFormObjEndDate: false,
+                    showPickerJylxType: false,
+                    showPickerEducation: false,
+                    showPickerDegree2: false,
+                    showPickerDetailLearning: false,
+                    showPickerDetailWork: false,
+                    showPickerDetailFamily: false,
+                    showPickerDetailCert: false,
+                    showGzexperice: false,
+                    showPickerWorkFormObjStartDate: false,
+                    showPickerWorkFormObjEndDate: false,
+                    showPickerFirstWork: false,
+                    showPickerFamily: false,
+                    showPickerFamilyRel: false,
+                    showPickerZhizhi: false,
+                    showPickerziZhiFormObjStartDate: false,
+                    showPickerziZhiFormObjEndDate: false,
+                    showPickernCertType: false,
+                    showPickernCertName: false,
+                    detailLearningObj: {},
+                    detailFamilyDataObj: {},
+                    detailCertDataObj: {},
+                    detailWorkObj: {},
+                    idTypes: [],
+                    studyData: [],
+                    workData: [],
+                    familyData: [],
+                    certData: [],
+                    bankType2: '',
+                    bankTypeText2: '',
+                    sfzzmsmjhzzy: [], //身份证正面扫描件
+                    sfzfmsmj: [], //身份证背面扫描件
+                    diploma: [], //学位证书
+                    academicCertificate: [], //学历证书
+                    lzzmsmj: [], //离职证明
+                    sfylzzm: null, //是否有离职证明
+                })
+                showSuccessToast({
+                    message: '重置成功',
+                    position: 'middle'
+                });
+
+            }
+            const cancelAddLearning = () => {
+                state.userInfoForm.showLearningexperice = false
+            }
+            //提交入职信息
+            const onSubmit = (values) => {
+            };
+            //添加学习经历
+            const onSubmitAddLearning = (values) => {
+                state.userInfoForm.studyData.push(state.studyFormObj)
+                state.userInfoForm.showLearningexperice = false
+                console.log('添加学习经历', state.studyFormObj)
+            };
+
+            //确认按钮
+            const submitAdd = (xdata, flag, obj) => {
+                console.log(xdata, state.ziZhiFormObj.certName, state.ziZhiFormObj.bzx.length)
+                if (xdata == 'certData' && state.ziZhiFormObj.certName == 6001 && state.ziZhiFormObj.bzx.length == 0) {
+                    showFailToast('备注项必填');
+                    return
+                }
+                state.userInfoForm[xdata].push(state[obj])
+                state.userInfoForm[flag] = false
+            };
+
+            // 关闭弹框
+            const onBeforeClose = function (action, done) {
+                // 点击了确定按钮
+                if (action === "confirm") {
+                    console.log(state.isAgree)
+                    if (!state.isAgree) {
+                        showToast({
+                            message: '请阅读《隐私政策》',
+                            position: 'middle'
+                        });
+                        state.show = true
+                    } else {
+                        state.show = false
+                    }
+                }
+                // 点击了取消按钮
+                else {
+                    showToast({
+                        message: '请阅读《隐私政策》',
+                        position: 'top'
+                    });
+                    state.show = true
+                }
+            }
+            //提交的时候做表单校验
+            const onFailed = (errorInfo) => {
+                console.log(errorInfo)
+                showFailToast({
+                    message: errorInfo.errors[0]?.message,
+                    position: 'middle'
+                });
+            };
+            //添加学习经历弹框的时候做表单校验
+            const onFailedAddLearning = (errorInfo) => {
+                showFailToast({
+                    message: errorInfo.errors[0].message,
+                    position: 'middle'
+                });
+            };
+            return {
+                ...toRefs(state),
+                onBeforeClose,
+                onSubmit,
+                cancelAddLearning,
+                onSubmitAddLearning,
+                filterCompanys,
+                onCompanyConfirm,
+                onFailed,
+                onFailedAddLearning,
+                getAllCompany,
+                savaInfo,
+                parseLocalStorage,
+                onCountryConfirm,
+                onNationConfirm,
+                onidTypeConfirm,
+                reset,
+                validateIdNumber,
+                fieldRules,
+                fieldLabel,
+                validateMobile,
+                validateEmail,
+                onidNumberStartDateConfirm,
+                onidNumberEndDateConfirm,
+                onBirthdayConfirm,
+                onidPolityConfirm,
+                onSelectedPlaces1Confirm,
+                onSelectedPlaces1Confirm2,
+                onSelectedPlaces1Confirm3,
+                onAccountTypeConfirm,
+                onMarryConfirm,
+                onFertilityConfirm,
+                onOfferTypeConfirm,
+                onDegreeConfirm,
+                onEnLevelConfirm,
+                onJpLevelConfirm,
+                onAddressTypeConfirm,
+                onBankTypeConfirm,
+                showPickerBankTypeChange,
+                onProvinceTypeConfirm,
+                chooseKhh,
+                onKhhConfirm,
+                validateBankCard,
+                bankCardWaring,
+                bankCardConfirmEvt,
+                onStudyFormObjConfirm,
+                onStudyFormObjEndDateConfirm,
+                onJylxTypeConfirm,
+                onEducationConfirm,
+                onDegree2Confirm,
+                addLearningConfirm,
+                lookDetail,
+                deleteLearningE,
+                deleteAllLearnng,
+                deleteAllGzLearnng,
+                lookWorkDetail,
+                onWorkFormObjStartDateConfirm,
+                onWorkFormObjEndDateConfirm,
+                submitAdd,
+                deleteWorkE,
+                onTimeConfirm,
+                onOptionConfirm,
+                lookOneDetail,
+                deleteAll,
+                deleteOneE,
+                onTimeConfirmOut,
+                getCertNameByCertType,
+                initializeStudyFormObj,
+                getBankNameByBuCompanyid,
+                isOtherBank,
+                ruZhiInfoSubmit,
+                closePickerKhh,
+                computedKhhPicker,
+                userInfoFormDom,
+                submitLoading,
+                beforeRead,
+                afterRead,
+            }
+        }
+    });
+    app.use(vant);
+    app.use(vant.Lazyload);
+    app.mount("#app");
+</script>
+</body>
+</html>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    html,
+    #app,
+    body {
+        height: 100%;
+        width: 100%;
+    }
+
+    body {
+        font-family: Calibri;
+    }
+
+    .rowinfo {
+        padding-left: 20px;
+    }
+
+    .yscss {
+        width: 80%;
+        height: 80%;
+        font-size: 12px;
+        padding: 0 10px;
+        overflow-y: auto;
+    }
+
+    .text_indent {
+        text-indent: 20px;
+    }
+
+    .bold {
+        font-weight: bolder;
+    }
+
+    .ml {
+        margin-left: 12px;
+    }
+
+    .mt {
+        margin-top: 20px;
+    }
+
+    .addLearningClass {
+        display: flex;
+        justify-content: center;
+    }
+
+    .firtJoin {
+        padding: 0;
+    }
+</style>

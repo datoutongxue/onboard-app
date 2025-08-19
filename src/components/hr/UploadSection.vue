@@ -69,12 +69,16 @@ const lzzmLabel = computed(() =>
   form.sfylzzm === '0' && form.lzzmsmjId === '' ? '*离职证明扫描件:' : '离职证明扫描件:',
 )
 
-const beforeRead = (file: File) => {
-  if (file.type !== 'application/pdf' && file.type !== 'image/jpeg' && file.type !== 'image/png') {
+const beforeRead = (file: File | File[]) => {
+  const check = (f: File) =>
+    f.type === 'application/pdf' || f.type === 'image/jpeg' || f.type === 'image/png'
+  const sizeOk = (f: File) => f.size <= 5 * 1024 * 1024
+  const list = Array.isArray(file) ? file : [file]
+  if (!list.every(check)) {
     showFailToast({ message: '只能上传pdf,jpg,png格式的文件', position: 'middle' })
     return false
   }
-  if (file.size > 5 * 1024 * 1024) {
+  if (!list.every(sizeOk)) {
     showFailToast({ message: '上传文件大小不能超过5M', position: 'middle' })
     return false
   }

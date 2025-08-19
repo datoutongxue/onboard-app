@@ -237,60 +237,44 @@ const validateMobile = (val: string) => {
     form.mobile = ''
     return '紧急联系人电话和个人手机不能相同'
   }
+  return true
 }
 const validateEmail = (val: string) => {
   const reg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(.[a-zA-Z0-9_-]+)+/
   if (!reg.test(val)) return `邮箱格式不正确'`
+  return true
 }
 
 const pickers = reactive({ showDegree: false, showEn: false, showJp: false, showAddrType: false, showOfferType: false, showMarry: false, showFertility: false })
-const degrees = [
-  { text: '高中以下学历', value: '07' },
-  { text: '高中', value: '06' },
-  { text: '中专', value: '05' },
-  { text: '大专', value: '04' },
-  { text: '本科', value: '01' },
-  { text: '硕士研究生', value: '02' },
-  { text: '博士研究生', value: '03' },
-  { text: '本科结业证书', value: '21' },
-  { text: '硕士研究生结业证书', value: '22' },
-]
-const enLevels = [
-  { text: 'CET四级', value: '0' },
-  { text: 'CET六级', value: '1' },
-  { text: '专业四级', value: '2' },
-  { text: '专业八级', value: '3' },
-]
-const jpLevels = [
-  { text: '一级', value: '0' },
-  { text: '二级', value: '1' },
-  { text: '三级', value: '2' },
-]
-const addressTypes = [
-  { text: '现居地址', value: '0' },
-  { text: '家庭地址', value: '1' },
-]
-const offerTypes = [
-  { text: '正式员工', value: '0' },
-  { text: '实习人员', value: '1' },
-  { text: '劳务人员', value: '2' },
-  { text: 'Freelancer', value: '3' },
-]
-const marrys = [
-  { text: '未婚', value: '0' },
-  { text: '已婚', value: '1' },
-  { text: '离异', value: '2' },
-]
-const fertilityes = [
-  { text: '未生育', value: '0' },
-  { text: '已生育', value: '1' },
-]
+import { ref } from 'vue'
+import useDict from '@/hooks/useDict'
 
-const onDegreeConfirm = ({ selectedOptions }: any) => {
-  form.degreeText = selectedOptions[0]?.text
-  form.degree = selectedOptions[0]?.value
-  pickers.showDegree = false
-}
+const degrees = ref<Array<{ text: string; value: string }>>([])
+const enLevels = ref<Array<{ text: string; value: string }>>([])
+const jpLevels = ref<Array<{ text: string; value: string }>>([])
+const addressTypes = ref<Array<{ text: string; value: string }>>([])
+const offerTypes = ref<Array<{ text: string; value: string }>>([])
+const marrys = ref<Array<{ text: string; value: string }>>([])
+const fertilityes = ref<Array<{ text: string; value: string }>>([])
+
+;(async () => {
+  const { items: degreeItems } = useDict('browser.hr_degree')
+  const { items: enLevelItems } = useDict('browser.hr_en_level')
+  const { items: jpLevelItems } = useDict('browser.hr_jp_level')
+  const { items: addrTypeItems } = useDict('browser.hr_address_type')
+  const { items: offerTypeItems } = useDict('browser.hr_offer_type')
+  const { items: marryItems } = useDict('browser.hr_marry')
+  const { items: fertilityItems } = useDict('browser.hr_fertility')
+  degrees.value = degreeItems.value
+  enLevels.value = enLevelItems.value
+  jpLevels.value = jpLevelItems.value
+  addressTypes.value = addrTypeItems.value
+  offerTypes.value = offerTypeItems.value
+  marrys.value = marryItems.value
+  fertilityes.value = fertilityItems.value
+})()
+
+const onDegreeConfirm = ({ selectedOptions }: any) => { form.degreeText = selectedOptions[0]?.text; form.degree = selectedOptions[0]?.value; pickers.showDegree = false }
 const onEnLevelConfirm = ({ selectedOptions }: any) => {
   form.enLevelText = selectedOptions[0]?.text
   form.enLevel = selectedOptions[0]?.value

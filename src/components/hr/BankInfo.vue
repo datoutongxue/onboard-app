@@ -98,6 +98,7 @@ import { computed, reactive, toRefs } from 'vue'
 import { useOnboardStore } from '@/stores/onboard'
 import http from '@/api/http'
 import { showToast } from 'vant'
+import { fetchDict } from '@/api/dict'
 
 const store = useOnboardStore()
 const form = store.userInfoForm
@@ -105,14 +106,15 @@ const form = store.userInfoForm
 const state = reactive({
   allPlaces1: [] as Array<{ text: string; value: string; children?: any[] }>,
   khhs: [] as Array<{ text: string; value: string }>,
-  bankTypes: [
-    { text: '建设银行', value: '0' },
-    { text: '招商银行', value: '1' },
-    { text: '中国银行', value: '2' },
-    { text: '工商银行', value: '3' },
-  ],
+  bankTypes: [] as Array<{ text: string; value: string }>,
 })
 const { allPlaces1, khhs, bankTypes } = toRefs(state)
+;(async () => {
+  bankTypes.value = await fetchDict('browser.hr_bank_type')
+})()
+
+const isOtherBank = () => {}
+const computedKhhPicker = computed(() => Number(form.showPickerKhh) > 0)
 
 const isDefaultBank = computed(() => !form.otherBank)
 
@@ -162,8 +164,8 @@ const closePickerKhh = () => {
   form.showPickerKhh = false as any
 }
 
-const validateBankCard = (val: string) => (/^[0-9]*$/.test(val) ? undefined : `银行卡号格式不正确'`)
-const bankCardConfirmEvt = (val: string) => (val !== form.bankCard ? `银行卡比对不正确` : undefined)
+const validateBankCard = (val: string) => (/^[0-9]*$/.test(val) ? true : `银行卡号格式不正确'`)
+const bankCardConfirmEvt = (val: string) => (val !== form.bankCard ? `银行卡比对不正确` : true)
 const bankCardWaring = () => showToast({ message: '*请确保提供的是所选择银行对应的本人银行卡号' })
 
 // 暴露校验方法给父组件（van-field rules 使用）

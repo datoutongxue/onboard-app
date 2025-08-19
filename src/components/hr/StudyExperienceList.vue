@@ -187,37 +187,15 @@ const form = store.userInfoForm
 const minDate = new Date(1949, 1, 1)
 const maxDate = new Date(2100, 1, 1)
 
-const educations = [
-  { text: '本科', value: '01' },
-  { text: '硕士研究生', value: '02' },
-  { text: '博士研究生', value: '03' },
-  { text: '大专', value: '04' },
-  { text: '本科结业证书', value: '21' },
-  { text: '硕士研究生结业证书', value: '22' },
-]
-const degrees = [
-  { text: '学士学位', value: '01' },
-  { text: '硕士学位', value: '02' },
-  { text: '博士学位', value: '03' },
-  { text: '双学位', value: '04' },
-  { text: '无学位', value: '09' },
-]
-const jylxTypes = [
-  { text: '高中', value: '0' },
-  { text: '普通高等教育', value: '1' },
-  { text: '语言学校', value: '2' },
-  { text: '高等教育自学考试', value: '3' },
-  { text: '海外教育', value: '4' },
-  { text: '教育学院', value: '5' },
-  { text: '函授大学(学院)', value: '6' },
-  { text: '夜大学', value: '7' },
-  { text: '职高', value: '8' },
-  { text: '中等职业学院', value: '9' },
-  { text: '技术学校', value: '10' },
-  { text: '职工大学(学院或专科)', value: '11' },
-  { text: '成人高等教育', value: '21' },
-  { text: '其他', value: '22' },
-]
+import { fetchDict } from '@/api/dict'
+const educations = ref<Array<{ text: string; value: string }>>([])
+const degrees = ref<Array<{ text: string; value: string }>>([])
+const jylxTypes = ref<Array<{ text: string; value: string }>>([])
+;(async () => {
+  educations.value = await fetchDict('browser.hr_education')
+  degrees.value = await fetchDict('browser.hr_degree2')
+  jylxTypes.value = await fetchDict('browser.hr_study_type')
+})()
 
 const educationAndDegree2s = new Map<string, [Array<any>, Array<any>]>([
   [
@@ -231,19 +209,19 @@ const educationAndDegree2s = new Map<string, [Array<any>, Array<any>]>([
       [{ text: '无学位', value: '09' }],
     ],
   ],
-  ['1', [educations, degrees]],
-  ['2', [educations, degrees]],
-  ['3', [educations, degrees]],
-  ['4', [educations, degrees]],
-  ['5', [educations, degrees]],
-  ['6', [educations, degrees]],
-  ['7', [educations, degrees]],
+  ['1', [educations.value, degrees.value]],
+  ['2', [educations.value, degrees.value]],
+  ['3', [educations.value, degrees.value]],
+  ['4', [educations.value, degrees.value]],
+  ['5', [educations.value, degrees.value]],
+  ['6', [educations.value, degrees.value]],
+  ['7', [educations.value, degrees.value]],
   ['8', [[{ text: '中专', value: '05' }], [{ text: '无学位', value: '09' }]]],
   ['9', [[{ text: '中专', value: '05' }], [{ text: '无学位', value: '09' }]]],
   ['10', [[{ text: '中专', value: '05' }], [{ text: '无学位', value: '09' }]]],
-  ['11', [educations, degrees]],
-  ['21', [educations, degrees]],
-  ['22', [educations, degrees]],
+  ['11', [educations.value, degrees.value]],
+  ['21', [educations.value, degrees.value]],
+  ['22', [educations.value, degrees.value]],
 ])
 
 const detailShow = ref(false)

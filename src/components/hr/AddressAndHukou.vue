@@ -101,10 +101,8 @@ const allPlaces1 = ref<any[]>([])
   allPlaces1.value = list
 })()
 
-const accountTypes = [
-  { text: '城镇', value: '0' },
-  { text: '农村', value: '1' },
-]
+import useDict from '@/hooks/useDict'
+const { items: accountTypes } = useDict('browser.hr_account_type')
 
 const pickers = reactive({
   showBirth: false,

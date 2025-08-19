@@ -95,14 +95,8 @@ import { showFailToast } from 'vant'
 
 const store = useOnboardStore()
 const form = store.userInfoForm
-const familyRels = [
-  { text: '配偶', value: '0' },
-  { text: '父亲', value: '1' },
-  { text: '母亲', value: '2' },
-  { text: '子女', value: '3' },
-  { text: '兄弟姐妹', value: '4' },
-  { text: '其他亲属关系', value: '5' },
-]
+import useDict from '@/hooks/useDict'
+const { items: familyRels } = useDict('browser.hr_family_rel')
 
 const detailShow = ref(false)
 const detail = reactive<any>({})

@@ -2,7 +2,7 @@
   <div id="hr-form">
     <PrivacyDialog v-model:show="show" />
 
-    <van-form @submit="ruZhiInfoSubmit" class="form" @failed="onFailed" ref="userInfoFormDom">
+    <van-form @submit="ruZhiInfoSubmit" class="form" ref="userInfoFormDom">
       <van-row>
         <van-col span="24">
           <CompanyPicker />
@@ -37,7 +37,7 @@
             <van-button size="small" type="primary" @click="savaInfo">保存为草稿</van-button>
           </van-col>
           <van-col span="3" class="ml">
-            <van-button size="small" type="primary" @click="reset">重置</van-button>
+            <van-button size="small" type="primary" @click="reset">重置</van按钮>
           </van-col>
         </van-row>
       </div>
@@ -116,10 +116,25 @@ const state = reactive({
     bankCardConfirm: '',
     showLearningexperice: false,
     studyData: [] as any[],
+    workData: [] as any[],
+    familyData: [] as any[],
+    certData: [] as any[],
     name: '',
     mobile: '',
     email: '',
     showPickerBankType: false,
+    bg01: '',
+    bankType2: '',
+    idNumber: '',
+    birthday: '',
+    idType: '',
+    degree: '',
+    bysj: '',
+    hkxz2: '',
+    offerType: '',
+    lzzmsmjId: null as any,
+    sfzzmsmjhzzyId: null as any,
+    sfzfmsmjId: null as any,
   },
 })
 
@@ -145,8 +160,7 @@ const echoForm = async (val: any) => {
       Object.keys(val[0]).forEach((k) => {
         ;(state.userInfoForm as any)[k] = val[0][k]
       })
-      // 触发国家联动，设置证件类型显示与必填
-      await onCountryConfirm({ selectedOptions: [{ text: val[0].countryText, value: val[0].country }] })
+      // 回显后，证件类型与户口等联动由子组件内部处理
     }
     // 列表回显（按原逻辑 concat）
     state.userInfoForm.studyData = (state.userInfoForm.studyData || []).concat(val[1] || [])
@@ -424,6 +438,9 @@ const reset = () => {
     bankCard: '',
     bankCardConfirm: '',
     studyData: [],
+    workData: [],
+    familyData: [],
+    certData: [],
     name: '',
     mobile: '',
     email: '',

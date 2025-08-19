@@ -36,6 +36,10 @@ export interface UserInfoFormState {
   profession?: string
   xlzsbh?: string
   xwzsbh?: string
+  enLevelText?: string
+  enLevel?: string
+  jpLevelText?: string
+  jpLevel?: string
   // 来源信息
   bg?: string
   bg01?: string
@@ -64,6 +68,8 @@ export interface UserInfoFormState {
   certData: any[]
   // 户口与地址
   showHukou: boolean
+  showIdNumberStartDate?: boolean
+  showIdNumberEndDate?: boolean
   currentAddress?: string
   familyAddress?: string
   addressTypeText?: string
@@ -76,6 +82,14 @@ export interface UserInfoFormState {
   selectedPlaces3: string[]
   accountTypeText: string
   accountType: string
+  offerTypeText?: string
+  offerType?: string
+  marryText?: string
+  marry?: string
+  fertilityText?: string
+  fertility?: string
+  delivery?: boolean
+  resignReason?: string
   // 首次工作时间
   firstWork: string
   // 上传附件
@@ -122,6 +136,10 @@ export const useOnboardStore = defineStore('onboard', {
       profession: '',
       xlzsbh: '',
       xwzsbh: '',
+      enLevelText: '',
+      enLevel: '',
+      jpLevelText: '',
+      jpLevel: '',
       bg: '',
       bg01: '',
       bu: '',
@@ -145,6 +163,8 @@ export const useOnboardStore = defineStore('onboard', {
       familyData: [] as any[],
       certData: [] as any[],
       showHukou: false,
+      showIdNumberStartDate: false,
+      showIdNumberEndDate: false,
       currentAddress: '',
       familyAddress: '',
       addressTypeText: '',
@@ -157,6 +177,14 @@ export const useOnboardStore = defineStore('onboard', {
       selectedPlaces3: [] as string[],
       accountTypeText: '',
       accountType: '',
+      offerTypeText: '',
+      offerType: '',
+      marryText: '',
+      marry: '',
+      fertilityText: '',
+      fertility: '',
+      delivery: false,
+      resignReason: '',
       firstWork: '',
       sfzzmsmjhzzy: [],
       sfzfmsmj: [],
